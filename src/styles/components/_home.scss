@@ -18,8 +18,18 @@
 
     .Emoji{
         font-size: 8rem;
-        color: $orange;
+        color: yellow;
         text-align: center;
+        
+    }
+
+    .mod{
+        transform: rotate(-45deg);
+    }
+
+    .badmod{
+        transform: rotate(45deg);
+        color: brown;
     }
 
     h1{

@@ -12,8 +12,8 @@ const Home = () => (
             <section>
                 <div style={{textAlign: 'center'}}>
                     <IconButton>
-                      <Mood color="secondary" className="Emoji"></Mood>
-                        <MoodBad color="secondary" className="Emoji"></MoodBad>
+                      <Mood color="secondary" className="Emoji mod"></Mood>
+                        <MoodBad color="secondary" className="Emoji badmod"></MoodBad>
                     </IconButton>
                 </div>
                 <h1>Nhận Diện</h1>
