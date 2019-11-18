@@ -7,8 +7,11 @@
     "@material-ui/icons": "^4.5.1",
     "@mdi/font": "^4.5.95",
     "classnames": "^2.2.6",
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
     "materialize-css": "^1.0.0",
     "node-sass": "^4.13.0",
+    "path": "^0.12.7",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
@@ -16,7 +19,8 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node index.js",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
