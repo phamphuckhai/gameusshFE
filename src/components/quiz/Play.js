@@ -1,15 +1,40 @@
 import React, { Component, Fragment } from 'react';
 import { Helmet } from 'react-helmet'
 import M from 'materialize-css';
+import Button from '@material-ui/core/Button';
+import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
+import { withStyles } from '@material-ui/core/styles';
+import TimerIcon from '@material-ui/icons/Timer';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import questions from '../../questions.json';
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
+import { visible } from 'ansi-colors';
+
+const styles = theme => ({
+    button: {
+        margin: theme.spacing(1),
+    },
+    scrollBar: {
+        '&::-webkit-scrollbar': {
+            width: '0.4em'
+        },
+        '&::-webkit-scrollbar-track': {
+            '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(0,0,0,.1)',
+            outline: '1px solid slategrey'
+        }
+    }
+});
+
 
 class Play extends Component {
-    
-      
+
+
     constructor(props) {
         shuffle(questions);
         super(props);
@@ -28,9 +53,11 @@ class Play extends Component {
             hints: 5,
             fiftyFifty: 0.5,
             useFiftyFifty: false,
-            tim: {}
+            tim: {},
+            hint: false,
+            bsound: true
         };
-
+        this.divRef = React.createRef()
     }
 
     componentDidMount() {
@@ -72,6 +99,16 @@ class Play extends Component {
         }
     };
 
+    handleHintClick = () =>{
+        if(this.state.hint==false)
+            this.divRef.current.classList.add('hide');
+        else 
+            this.divRef.current.classList.remove('hide');
+        this.setState(prevState=>({
+            hint: !prevState.hint
+        }));
+    }
+
     correctAnswer = () => {
         M.toast({
             html: 'Đúng rồi!',
@@ -105,6 +142,8 @@ class Play extends Component {
     }
 
     render() {
+
+        const { classes } = this.props;
         const { currentQuestion, currentQuestionIndex, numberOfQuestions, correctAnswer } = this.state;
 
         return (
@@ -114,21 +153,24 @@ class Play extends Component {
                     <audio id="correct-sound" src={correctNotification}></audio>
                     <audio id="incorrect-sound" src={incorrectNotification}></audio>
                 </Fragment>
-                <div className="questions">
+                <div className="questions" >
                     <h2>Chọn đáp án đúng</h2>
                     <div className="lifeline-container">
                         <p>
                             <span className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon "><span className="lifeline">{correctAnswer}</span></span>
                         </p>
                     </div>
-                    <div>
-                        <p>
-                            <span className="left">{currentQuestionIndex + 1} of {numberOfQuestions}</span>
-                            <span className="right">0:30<span className="mdi mdi-clock-outline mdi-24px"></span></span>
-                        </p>
+                    <div className="space-flex">
+
+                        <span className="">{currentQuestionIndex + 1} of {numberOfQuestions}</span>
+                        <span className="timer">0:30<TimerIcon></TimerIcon></span>
+
                     </div>
                     <br></br>
-                    <h5>{currentQuestion.question}</h5>
+                    <div className="scrollBar">
+                        <h5 ref={this.divRef}>{currentQuestion.question}</h5>
+                    </div>
+
                     <div className="options-container">
                         <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionC}</p>
                     </div>
@@ -136,34 +178,58 @@ class Play extends Component {
                         <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionI}</p>
                     </div>
 
-                    <div className="button-container" >
-                        {/* <button>Previous</button>   */}
-                        {/* <button>Next</button> */}
-                        <button onClick={this.handleQuitButtonClick}>Quit</button>
+                    <div className="button-container space-flex" >
+
+
+
+
+
+                        <Button
+                            onClick={this.handleQuitButtonClick}
+                            variant="contained"
+                            color="yellow"
+                            className={classes.button}
+                            startIcon={<ExitToAppIcon />}
+                        >
+                            Thoát
+                        </Button>
+
+                        <Button
+                            onClick={this.handleHintClick}
+                            variant="contained"
+                            color="yellow"
+                            className={classes.button}
+                            startIcon={<EmojiObjectsIcon />}
+                        >
+                            Gợi ý
+                        </Button>
+
                     </div>
                 </div>
             </Fragment>
 
         );
     }
+    
 }
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
-  
+
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-  
-    return array;
-  }
 
-export default Play;
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
+export default withStyles(styles)(Play);

@@ -67,14 +67,51 @@
     padding: $xs $sm;
 }
 
+// .button-container button:first-child{
+//     background-color: darken($blue, 10%);
+//     box-shadow: $shadow;
+//     transition: 0.2s linear all;
+// }
+
+// .button-container button:first-child:hover{
+//     background-color: darken($blue, 20%);
+//     box-shadow: $shadow;
+//     transition: 0.2s linear all;
+// }
+
+// .button-container button:nth-child(2){
+//     background-color: $green;
+//     box-shadow: $shadow;
+//     transition: 0.2s linear all;
+// }
+
+// .button-container button:nth-child(2):hover{
+//     background-color: darken($green, 10%);
+//     box-shadow: $shadow;
+//     transition: 0.2s linear all;
+// }
+
+// .button-container button:last-child{
+//     background-color: $red;
+//     box-shadow: $shadow;
+//     transition: 0.2s linear all;
+// }
+
+// .button-container button:last-child:hover{
+//     background-color: darken($red, 10%);
+//     box-shadow: $shadow;
+//     transition: 0.2s linear all;
+// }
+
+
 .button-container button:first-child{
-    background-color: darken($blue, 10%);
+    background-color: darken($red, 10%);
     box-shadow: $shadow;
     transition: 0.2s linear all;
 }
 
 .button-container button:first-child:hover{
-    background-color: darken($blue, 20%);
+    background-color: darken($red, 20%);
     box-shadow: $shadow;
     transition: 0.2s linear all;
 }
@@ -91,16 +128,27 @@
     transition: 0.2s linear all;
 }
 
-.button-container button:last-child{
-    background-color: $red;
-    box-shadow: $shadow;
-    transition: 0.2s linear all;
+.space-flex{
+    display: flex;
+    justify-content: space-between;
 }
-
-.button-container button:last-child:hover{
-    background-color: darken($red, 10%);
-    box-shadow: $shadow;
-    transition: 0.2s linear all;
+.timer{
+    position: relative;
+    top: -4px;
 }
-
+.scrollBar {
+    font-size: 2rem;
+    display: block;
+    border: 1px solid lightcyan;
+    padding: 5px;
+    margin-top: 5px;
+    width: 60rem;
+    height: 10rem;
+    overflow: auto;
+    box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+    text-align: left;
+}
+.hide{
+    display: block;
+}
 
