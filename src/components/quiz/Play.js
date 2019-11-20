@@ -66,6 +66,8 @@ class Play extends Component {
 
     displayQuestions = (questions = this.state.questions, currentQuestion, nextQuestion, previousQuestion) => {
         let { currentQuestionIndex } = this.state;
+        if(this.state.hint===true)
+            this.divRef.current.classList.add('hide');
         if (!isEmpty(this.state.questions)) {
             questions = this.state.questions;
             currentQuestion = questions[currentQuestionIndex];
@@ -77,7 +79,8 @@ class Play extends Component {
                 nextQuestion,
                 previousQuestion,
                 numberOfQuestions: questions.length,
-                answer
+                answer,
+                hint: false
             });
         }
     };
@@ -100,9 +103,9 @@ class Play extends Component {
 
     handleHintClick = () =>{
         if(this.state.hint===false)
-            this.divRef.current.classList.add('hide');
+        this.divRef.current.classList.remove('hide');
         else 
-            this.divRef.current.classList.remove('hide');
+        this.divRef.current.classList.add('hide');
         this.setState(prevState=>({
             hint: !prevState.hint
         }));
@@ -118,7 +121,7 @@ class Play extends Component {
             score: prevState.score + 1,
             correctAnswer: prevState.correctAnswer + 1,
             currentQuestionIndex: prevState.currentQuestionIndex + 1,
-            numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
+            numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
         }), () => this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
         );
     }
@@ -133,7 +136,7 @@ class Play extends Component {
         this.setState(prevState => ({
             wrongAnswer: prevState.wrongAnswer + 1,
             currentQuestionIndex: prevState.currentQuestionIndex + 1,
-            numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1
+            numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
         }), () => {
             this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
         }
@@ -141,7 +144,7 @@ class Play extends Component {
     }
 
     render() {
-
+           
         const { classes } = this.props;
         const { currentQuestion, currentQuestionIndex, numberOfQuestions, correctAnswer } = this.state;
 
@@ -166,11 +169,11 @@ class Play extends Component {
 
                     </div>
                     <br></br>
-                    <div className="scrollBar">
-                        <h5 ref={this.divRef}>{currentQuestion.question}</h5>
-                        <span className="extra">Nguồn: {currentQuestion.source}</span>
+                    <div>
+                        <h5 className="scrollBar">{currentQuestion.question}</h5>
+                        <span className="extra hide" ref={this.divRef}>Nguồn: {currentQuestion.source}</span>
                     </div>
-
+                   
                     <div className="options-container">
                         <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionC}</p>
                     </div>
