@@ -170,7 +170,11 @@ class Play extends Component {
                     </div>
                     <br></br>
                     <div>
-                        <h5 className="scrollBar">{currentQuestion.question}</h5>
+                        <div className="scrollBar">
+                            <img src={require('../../assets/img/test.jpg')} alt="Picture" id="myImage"/>
+                            <h5>{currentQuestion.question}</h5>
+                        </div>
+                       
                         <span className="extra hide" ref={this.divRef}>Nguồn: {currentQuestion.source}</span>
                     </div>
                    
