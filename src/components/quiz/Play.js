@@ -159,12 +159,12 @@ class Play extends Component {
                     <h2>Chọn đáp án đúng</h2>
                     <div className="lifeline-container">
                         <p>
-                            <span className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon "><span className="lifeline">{correctAnswer}</span></span>
+                            <span>Số đáp án đúng: <span className="">{correctAnswer}</span></span>
                         </p>
                     </div>
                     <div className="space-flex">
 
-                        <span className="">{currentQuestionIndex + 1} of {numberOfQuestions}</span>
+                        <span className="">Số câu: {currentQuestionIndex + 1}/{numberOfQuestions}</span>
                         <span className="timer">0:30<TimerIcon></TimerIcon></span>
 
                     </div>
@@ -182,11 +182,6 @@ class Play extends Component {
                     </div>
 
                     <div className="button-container space-flex" >
-
-
-
-
-
                         <Button
                             onClick={this.handleQuitButtonClick}
                             variant="contained"
@@ -206,7 +201,6 @@ class Play extends Component {
                         >
                             Gợi ý
                         </Button>
-
                     </div>
                 </div>
             </Fragment>
