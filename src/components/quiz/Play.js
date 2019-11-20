@@ -66,6 +66,18 @@ class Play extends Component {
 
     displayQuestions = (questions = this.state.questions, currentQuestion, nextQuestion, previousQuestion) => {
         let { currentQuestionIndex } = this.state;
+        if(currentQuestionIndex + 1 >questions.length)
+        {
+            currentQuestionIndex = questions.length
+            setTimeout(
+                function() {
+                    this.props.history.push('/play/end');
+                    this.setState({position: 1});
+                }
+                .bind(this),300
+            );
+           
+        }else{
         if(this.state.hint===true)
             this.divRef.current.classList.add('hide');
         if (!isEmpty(this.state.questions)) {
@@ -83,6 +95,8 @@ class Play extends Component {
                 hint: false
             });
         }
+        }
+
     };
 
     handleOptionClick = (e) => {
