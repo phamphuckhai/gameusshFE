@@ -11,7 +11,6 @@ import questions from '../../questions.json';
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
-import { visible } from 'ansi-colors';
 
 const styles = theme => ({
     button: {
@@ -100,7 +99,7 @@ class Play extends Component {
     };
 
     handleHintClick = () =>{
-        if(this.state.hint==false)
+        if(this.state.hint===false)
             this.divRef.current.classList.add('hide');
         else 
             this.divRef.current.classList.remove('hide');
@@ -169,6 +168,7 @@ class Play extends Component {
                     <br></br>
                     <div className="scrollBar">
                         <h5 ref={this.divRef}>{currentQuestion.question}</h5>
+                        <span className="extra">Nguồn: {currentQuestion.source}</span>
                     </div>
 
                     <div className="options-container">
