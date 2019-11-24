@@ -14,7 +14,8 @@ import incorrectNotification from '../../assets/audio/incorrect.mp3';
 
 const styles = theme => ({
     button: {
-        margin: theme.spacing(1),
+
+        margin: theme.spacing(),
     },
     scrollBar: {
         '&::-webkit-scrollbar': {
@@ -52,23 +53,24 @@ class Play extends Component {
             hints: 5,
             fiftyFifty: 0.5,
             useFiftyFifty: false,
-            tim: {},
+            time: {},
             hint: false,
             bsound: true
         };
-        this.divRef = React.createRef()
+        this.divRef = React.createRef();
+        this.interval = null;
     }
 
     componentDidMount() {
         const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
         this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
+        // this.startTimer();
     }
 
     displayQuestions = (questions = this.state.questions, currentQuestion, nextQuestion, previousQuestion) => {
         let { currentQuestionIndex } = this.state;
         if(currentQuestionIndex + 1 >questions.length)
-        {
-            currentQuestionIndex = questions.length
+        {   
             setTimeout(
                 function() {
                     this.props.history.push('/play/end');
@@ -157,10 +159,48 @@ class Play extends Component {
         );
     }
 
+    startTimer = ()=>{
+        const countDownTime = Date.now() + 30000;
+        this.interval = setInterval(()=>{
+            const now = new Date();
+            const distance = countDownTime-now;
+
+            const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+            const seconds = Math.floor((distance % (1000*60))/1000);
+
+            if(distance<0)
+            {
+                clearInterval(this.interval);
+                this.setState({
+                    time:{
+                        minutes: 0,
+                        seconds: 0
+                    }
+                },()=>{
+                    alert('Hết giờ!!!!');;
+                    this.props.history.push('/');
+                });
+
+            }else{
+                this.setState({
+                    time:{
+                        minutes,
+                        seconds
+                    }
+                });
+            }
+        },1000);
+    }
+
     render() {
            
         const { classes } = this.props;
-        const { currentQuestion, currentQuestionIndex, numberOfQuestions, correctAnswer } = this.state;
+        const { currentQuestion, 
+                currentQuestionIndex, 
+                numberOfQuestions, 
+                correctAnswer,
+                time
+             } = this.state;
 
         return (
             <Fragment>
@@ -179,7 +219,7 @@ class Play extends Component {
                     <div className="space-flex">
 
                         <span className="">Số câu: {currentQuestionIndex + 1}/{numberOfQuestions}</span>
-                        <span className="timer">0:30<TimerIcon></TimerIcon></span>
+                        <span className="timer">{time.minutes}:{time.seconds}<TimerIcon></TimerIcon></span>
 
                     </div>
                     <br></br>

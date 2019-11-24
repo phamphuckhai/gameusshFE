@@ -1,13 +1,14 @@
 .questions{
     background-color: $off-white;
     border-left: 5px solid $blue;
-    width: 80%;
+    width: 95%;
     margin: $lg auto 0 auto;
     padding: $sm $md;
 
     h2{
         text-align: center;
         font-weight: lighter;
+        margin: auto !important;
     }
 
     .lifeline-container{
@@ -51,11 +52,9 @@
 }
 
 .button-container{
-    display: flex;
-    justify-content: flex-start;
-    margin: 0 auto $sm auto;
-    padding: $md;
-    width: 80%;
+    white-space: nowrap;
+    display: inline-block;
+    margin: 0 10% $sm 10%;
 }
 
 .button-container button {
@@ -64,6 +63,7 @@
     cursor: pointer;
     margin-right: $md;
     padding: $xs $sm;
+    margin-top: 0px;
 }
 
 // .button-container button:first-child{
@@ -130,6 +130,7 @@
 .space-flex{
     display: flex;
     justify-content: space-between;
+
 }
 .timer{
     position: relative;
@@ -140,8 +141,7 @@
     display: block;
     border: 1px solid lightcyan;
     padding: 5px;
-    margin-top: 5px;
-    height: 10rem;
+    height: 20rem;
     overflow: auto;
     box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
     text-align: left;
