@@ -64,7 +64,7 @@ class Play extends Component {
     componentDidMount() {
         const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
         this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
-        // this.startTimer();
+        this.startTimer();
     }
 
     displayQuestions = (questions = this.state.questions, currentQuestion, nextQuestion, previousQuestion) => {
@@ -160,7 +160,7 @@ class Play extends Component {
     }
 
     startTimer = ()=>{
-        const countDownTime = Date.now() + 30000;
+        const countDownTime = Date.now() + 150000;
         this.interval = setInterval(()=>{
             const now = new Date();
             const distance = countDownTime-now;
