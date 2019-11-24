@@ -54,7 +54,8 @@
 .button-container{
     white-space: nowrap;
     display: inline-block;
-    margin: 0 10% $sm 10%;
+    margin: 0 auto $sm auto;
+    width: 80%;
 }
 
 .button-container button {
@@ -157,8 +158,8 @@
 
 #myImage{
     float: right; 
-    width: 40%; 
-    height: 100%; 
+    width: 30%; 
+    height: 60%; 
     margin: 0 1rem;
 }
 
