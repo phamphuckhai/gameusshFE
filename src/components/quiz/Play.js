@@ -11,7 +11,6 @@ import questions from '../../questions.json';
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
-import End from './End.js';
 
 const styles = theme => ({
     button: {
@@ -215,7 +214,7 @@ class Play extends Component {
     endGame = () => {
         alert('Kết thúc!');
         const {state} = this;
-        const playerStates = {
+        const playerStats = {
             score: state.score,
             numberOfQuestions: state.numberOfQuestions,
             numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
@@ -223,9 +222,9 @@ class Play extends Component {
             wrongAnswer: state.wrongAnswer,
             fiftyFifty: 2-state.fiftyFifty
         };
-        console.log(playerStates);
+        console.log(playerStats);
         setTimeout(() => {
-            this.props.history.push('/');
+            this.props.history.push('/play/quizSummary', playerStats);
         }, 1000);
     }
 
@@ -299,7 +298,7 @@ class Play extends Component {
                         </Button>
                     </div>
                 </div>
-                <End setScore = {score}/>
+                
             </Fragment>
             
         );
