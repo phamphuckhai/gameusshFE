@@ -11,6 +11,7 @@ import questions from '../../questions.json';
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
+import End from './End.js';
 
 const styles = theme => ({
     button: {
@@ -59,6 +60,10 @@ class Play extends Component {
         };
         this.divRef = React.createRef();
         this.interval = null;
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.interval); 
     }
 
     componentDidMount() {
@@ -138,7 +143,14 @@ class Play extends Component {
             correctAnswer: prevState.correctAnswer + 1,
             currentQuestionIndex: prevState.currentQuestionIndex + 1,
             numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
-        }), () => this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
+        }), () => {
+            if(this.state.nextQuestion===undefined){
+                this.endGame();
+            }else{
+                this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
+
+            }
+        }
         );
     }
 
@@ -154,7 +166,12 @@ class Play extends Component {
             currentQuestionIndex: prevState.currentQuestionIndex + 1,
             numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
         }), () => {
-            this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
+            if(this.state.nextQuestion===undefined){
+                this.endGame();
+            }else{
+                this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
+
+            }
         }
         );
     }
@@ -177,8 +194,9 @@ class Play extends Component {
                         seconds: 0
                     }
                 },()=>{
-                    alert('Hết giờ!!!!');;
-                    this.props.history.push('/');
+                    // alert('Hết giờ!!!!');;
+                    // this.props.history.push('/');
+                    this.endGame();
                 });
 
             }else{
@@ -192,6 +210,23 @@ class Play extends Component {
         },1000);
     }
 
+    endGame = () => {
+        alert('Kết thúc!');
+        const {state} = this;
+        const playerStates = {
+            score: state.score,
+            numberOfQuestions: state.numberOfQuestions,
+            numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
+            correctAnswer: state.correctAnswer,
+            wrongAnswer: state.wrongAnswer,
+            fiftyFifty: 2-state.fiftyFifty
+        };
+        console.log(playerStates);
+        setTimeout(() => {
+            this.props.history.push('/');
+        }, 1000);
+    }
+
     render() {
            
         const { classes } = this.props;
@@ -199,7 +234,8 @@ class Play extends Component {
                 currentQuestionIndex, 
                 numberOfQuestions, 
                 correctAnswer,
-                time
+                time, 
+                score
              } = this.state;
 
         return (
@@ -261,9 +297,11 @@ class Play extends Component {
                         </Button>
                     </div>
                 </div>
+                <End setScore = {score}/>
             </Fragment>
-
+            
         );
+
     }
     
 }
