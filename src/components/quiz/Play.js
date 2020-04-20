@@ -60,6 +60,8 @@ class Play extends Component {
         };
         this.divRef = React.createRef();
         this.interval = null;
+        this.wrongSound = React.createRef();
+        this.correctSound = React.createRef();
     }
 
     componentWillUnmount(){
@@ -108,10 +110,10 @@ class Play extends Component {
 
     handleOptionClick = (e) => {
         if (e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
-            document.getElementById('correct-sound').play();
+           this.correctSound.current.play();
             this.correctAnswer();
         } else {
-            document.getElementById('incorrect-sound').play();
+            this.wrongSound.current.play();
             this.wrongAnswer();
         }
     }
@@ -242,8 +244,8 @@ class Play extends Component {
             <Fragment>
                 <Helmet><title>Trắc nghiệm</title></Helmet>
                 <Fragment>
-                    <audio id="correct-sound" src={correctNotification}></audio>
-                    <audio id="incorrect-sound" src={incorrectNotification}></audio>
+                    <audio ref={this.correctSound} src={correctNotification}></audio>
+                    <audio ref={this.wrongSound} src={incorrectNotification}></audio>
                 </Fragment>
                 <div className="questions" >
                     <h2>Chọn đáp án đúng</h2>
