@@ -23,6 +23,17 @@
         
     }
 
+    .Ali{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: $md;
+    }
+
+    .Hiden{
+        display: none;
+    }
+
     .mod{
         transform: rotate(-45deg);
     }
@@ -48,7 +59,7 @@
     a.play-button{
         display: block;
         border-radius: $button-radius;
-        background-color: $green;
+        background-color: $blue;
         color: #fff;
         cursor: pointer;
         padding: $normal;
@@ -57,7 +68,7 @@
     }
 
     a.play-button:hover{
-        background-color: darken($green, 15%);
+        background-color: darken($blue, 15%);
         box-shadow: $shadow;
     }
 
@@ -65,7 +76,52 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
-        margin-top: $lg;
+        margin-top: $md;
+    }
+
+    #soEz{
+        background-color: limegreen;
+    }
+
+    #soEz:hover{
+        background-color: darken(limegreen, 15%);
+        box-shadow: $shadow;
+    }
+
+    #ez{
+        background-color: green;
+    }
+
+    #ez:hover{
+        background-color: darken(green, 15%);
+        box-shadow: $shadow;
+    }
+
+    #me{
+        background-color: gold;
+    }
+
+    #me:hover{
+        background-color: darken(gold, 15%);
+        box-shadow: $shadow;
+    }
+
+    #df{
+        background-color: orange;
+    }
+
+    #df:hover{
+        background-color: darken(orange, 15%);
+        box-shadow: $shadow;
+    }
+
+    #soDf{
+        background-color: red;
+    }
+
+    #soDf:hover{
+        background-color: darken(red, 15%);
+        box-shadow: $shadow;
     }
 
     #login-button{
@@ -88,6 +144,16 @@
     }
 
     .auth-container .auth-buttons{
+        color: #fff;
+        cursor: pointer;
+        border-radius: $button-radius;
+        padding: $normal 0;
+        text-align: center;
+        width: 45%;
+        transition: 0.3s linear all;
+    }
+
+    .Ali .auth-buttons{
         color: #fff;
         cursor: pointer;
         border-radius: $button-radius;
