@@ -110,7 +110,7 @@ class Play extends Component {
     async initQuestion(){
         const questions = []
         console.log('im constructor');
-        await db.collection('questions')
+        await db.collection('test')
         .get()
         .then(snapshot => {
             console.log(snapshot);      
