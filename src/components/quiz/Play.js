@@ -14,7 +14,7 @@ import incorrectNotification from '../../assets/audio/incorrect.mp3';
 
 //firebase
 import { db } from '../../services/firebase';
-import { ThreeSixtySharp } from '@material-ui/icons';
+import { ThreeSixtySharp, FontDownload, Bluetooth } from '@material-ui/icons';
 
 
 
@@ -110,7 +110,7 @@ class Play extends Component {
     async initQuestion(){
         const questions = []
         console.log('im constructor');
-        await db.collection('test')
+        await db.collection('questions')
         .get()
         .then(snapshot => {
             console.log(snapshot);      
@@ -335,6 +335,7 @@ class Play extends Component {
                     <div>
                         <div className="scrollBar">
                             <img src={require('../../assets/img/test.jpg')} alt="Picture" id="myImage" />
+                            <h4 >{currentQuestion.title}</h4>
                             <h5>{currentQuestion.question}</h5>
                         </div>
 
