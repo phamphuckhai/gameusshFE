@@ -50,13 +50,29 @@ class Home extends Component {
         this.setState({level: a})
     }
 
-    async changePage(){
-        await this.setLevel(1);
+    async changePage(a){
+        await this.setLevel(a);
         console.log(this.state.level);
         await this.pasteState();
     }
-    deFuc = () => {
-        this.changePage();
+    sEzFunc = () => {
+        this.changePage(0);
+    }
+
+    ezFunc = () => {
+        this.changePage(1);
+    }
+
+    mFunc = () => {
+        this.changePage(2);
+    }
+
+    dfFunc = () => {
+        this.changePage(3);
+    }
+
+    soDfFunc = () => {
+        this.changePage(4);
     }
     render() {
         return (
@@ -80,15 +96,15 @@ class Home extends Component {
                         </div>
 
                         <div className="auth-container" >
-                            <Link className="auth-buttons Hiden" id="soEz" ref={this.soEzRef} onClick={this.deFuc}>Cực Dễ</Link>
-                            <Link to="/play/quiz" className="auth-buttons Hiden" id="ez" ref={this.ezRef} >Dễ</Link>
+                            <Link className="auth-buttons Hiden" id="soEz" ref={this.soEzRef} onClick={this.sEzFunc}>Cực Dễ</Link>
+                            <Link className="auth-buttons Hiden" id="ez" ref={this.ezRef} onClick={this.ezFunc}>Dễ</Link>
                         </div>
                         <div className="Ali" style={{textAlign: 'center' }} >
-                        <Link to="/play/quiz" className="auth-buttons Hiden" id="me" ref={this.mRef}>Trung bình</Link>
+                        <Link className="auth-buttons Hiden" id="me" ref={this.mRef} onClick={this.mFunc}>Trung bình</Link>
                         </div>
                         <div className="auth-container" >
-                            <Link to="/play/quiz" className="auth-buttons Hiden" id="df" ref={this.dfRef}>Khó</Link>
-                            <Link to="/play/quiz" className="auth-buttons Hiden" id="soDf" ref={this.soDfRef}>Cực khó</Link>
+                            <Link className="auth-buttons Hiden" id="df" ref={this.dfRef} onClick={this.dfFunc}>Khó</Link>
+                            <Link className="auth-buttons Hiden" id="soDf" ref={this.soDfRef} onClick={this.soDfFunc}>Cực khó</Link>
                         </div>
 
                     </section>

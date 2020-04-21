@@ -99,7 +99,8 @@ class Play extends Component {
             useFiftyFifty: false,
             time: {},
             hint: false,
-            bsound: true
+            bsound: true,
+            colecItem: ""
         };
         this.divRef = React.createRef();
         this.interval = null;
@@ -108,23 +109,29 @@ class Play extends Component {
        
     }
     
+    async chooseLevel(){
+        let colecItem = '';
+        if(this.state.level == 0){
+            colecItem="questions"
+        }else if(this.state.level == 1){
+            colecItem="questions1"
+        }else if(this.state.level == 2){
+            colecItem="questions2"
+        }else if(this.state.level == 3){
+            colecItem="questions3"
+        }else if(this.state.level == 4){
+            colecItem="questions4"
+        }
+        this.setState({colecItem: colecItem});
+    }
+
     async initQuestion(){
+        await this.initLevel();
         const questions = []
-        // var colecItem = '';
-        // if(this.state.level == 0){
-        //     colecItem="questions"
-        // }else if(this.state.level == 1){
-        //     colecItem="questions1"
-        // }else if(this.state.level == 2){
-        //     colecItem="questions2"
-        // }else if(this.state.level == 3){
-        //     colecItem="questions3"
-        // }else if(level == 1){
-        //     colecItem="questions4"
-        // }
+        await this.chooseLevel();
         console.log('im constructor');
         // await db.collection(colecItem)
-        await db.collection('questions')
+        await db.collection(this.state.colecItem)
         .get()
         .then(snapshot => {
             console.log(snapshot);      
