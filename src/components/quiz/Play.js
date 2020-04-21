@@ -82,6 +82,7 @@ class Play extends Component {
         super(props);
         // shuffle(questions);
         this.state = {
+            level: 0,
             questions: [],
             currentQuestion: {},
             nextQuestion: {},
@@ -109,7 +110,20 @@ class Play extends Component {
     
     async initQuestion(){
         const questions = []
+        // var colecItem = '';
+        // if(this.state.level == 0){
+        //     colecItem="questions"
+        // }else if(this.state.level == 1){
+        //     colecItem="questions1"
+        // }else if(this.state.level == 2){
+        //     colecItem="questions2"
+        // }else if(this.state.level == 3){
+        //     colecItem="questions3"
+        // }else if(level == 1){
+        //     colecItem="questions4"
+        // }
         console.log('im constructor');
+        // await db.collection(colecItem)
         await db.collection('questions')
         .get()
         .then(snapshot => {
@@ -123,6 +137,13 @@ class Play extends Component {
            this.setState({questions: questions})
           })
         .catch(error => console.log(error));
+    }
+
+    async initLevel(){
+        const {state} = this.props.location;
+        this.setState({
+            level: state.level
+        });
     }
     
     displayFirst = () => {
@@ -301,7 +322,8 @@ class Play extends Component {
     }
 
     render() {
-        
+        console.log('im render');
+        console.log(this.props);
         const { classes } = this.props;
         const { currentQuestion,
             currentQuestionIndex,

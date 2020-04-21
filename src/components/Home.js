@@ -23,6 +23,18 @@ class Home extends Component {
         this.playRef = React.createRef();
     }
 
+    async pasteState () {
+        const {state} = this;
+        const homeStats = {
+          level: state.level  
+          
+        };
+        setTimeout(() => {
+            this.props.history.push('/play/quiz', homeStats);
+        }, 1000);
+        
+    }
+
     handleOnClick = () => {
         this.soEzRef.current.classList.remove('Hiden');
         this.ezRef.current.classList.remove('Hiden');
@@ -32,6 +44,19 @@ class Home extends Component {
         // this.playRef.current.
         this.setState({textPlay: 'Vui lòng chọn mức độ chơi! '});
 
+    }
+
+    async setLevel(a){
+        this.setState({level: a})
+    }
+
+    async changePage(){
+        await this.setLevel(1);
+        console.log(this.state.level);
+        await this.pasteState();
+    }
+    deFuc = () => {
+        this.changePage();
     }
     render() {
         return (
@@ -55,8 +80,8 @@ class Home extends Component {
                         </div>
 
                         <div className="auth-container" >
-                            <Link to="/play/quiz" className="auth-buttons Hiden" id="soEz" ref={this.soEzRef}>Cực Dễ</Link>
-                            <Link to="/play/quiz" className="auth-buttons Hiden" id="ez" ref={this.ezRef}>Dễ</Link>
+                            <Link className="auth-buttons Hiden" id="soEz" ref={this.soEzRef} onClick={this.deFuc}>Cực Dễ</Link>
+                            <Link to="/play/quiz" className="auth-buttons Hiden" id="ez" ref={this.ezRef} >Dễ</Link>
                         </div>
                         <div className="Ali" style={{textAlign: 'center' }} >
                         <Link to="/play/quiz" className="auth-buttons Hiden" id="me" ref={this.mRef}>Trung bình</Link>
