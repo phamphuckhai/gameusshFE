@@ -7,10 +7,17 @@ import { withStyles } from '@material-ui/core/styles';
 import TimerIcon from '@material-ui/icons/Timer';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import questions from '../../questions.json';
+// import questions from '../../questions.json';
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
+
+//firebase
+import { db } from '../../services/firebase';
+import { ThreeSixtySharp } from '@material-ui/icons';
+
+
+
 
 const styles = theme => ({
     button: {
@@ -32,14 +39,50 @@ const styles = theme => ({
 });
 
 
-class Play extends Component {
 
+
+class Play extends Component {
+    //     constructor(props){
+    //         super(props);
+    //         this.state = {
+    //             questions: null
+    //         }
+    //     }
+
+    //     componentDidMount(){
+    //             db.collection('questions')
+    //       .get()
+    //       .then(snapshot => {
+    //           console.log(snapshot);
+    //           const questions = []
+    //           snapshot.forEach(doc => {
+
+    //               const data = doc.data();
+    //               questions.push(data);
+    //           })
+    //           console.log(questions );
+    //          this.setState({questions: questions})
+    //         })
+    //       .catch(error => console.log(error));
+    // }
+
+
+    //     render(){
+    //        return(
+    //            <div className="app">
+
+    //            </div>
+    //        )
+    //     }
+    // }
+    // export default Play
 
     constructor(props) {
-        shuffle(questions);
+       
         super(props);
+        // shuffle(questions);
         this.state = {
-            questions,
+            questions: [],
             currentQuestion: {},
             nextQuestion: {},
             previousQuestion: {},
@@ -61,55 +104,85 @@ class Play extends Component {
         this.interval = null;
         this.wrongSound = React.createRef();
         this.correctSound = React.createRef();
+       
     }
-
-    componentWillUnmount(){
-        clearInterval(this.interval); 
+    
+    async initQuestion(){
+        const questions = []
+        console.log('im constructor');
+        await db.collection('questions')
+        .get()
+        .then(snapshot => {
+            console.log(snapshot);      
+            snapshot.forEach(doc => {
+    
+                const data = doc.data();
+                questions.push(data);
+            })
+            console.log(questions);
+           this.setState({questions: questions})
+          })
+        .catch(error => console.log(error));
     }
-
-    componentDidMount() {
+    
+    displayFirst = () => {
+        console.log('im componentdidmount');
         const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
-        this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
+                this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
         this.startTimer();
     }
 
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    componentWillMount(){
+       
+    }
+
+    async componentDidMount() {
+        await this.initQuestion();
+        this.displayFirst();
+    }
+
     displayQuestions = (questions = this.state.questions, currentQuestion, nextQuestion, previousQuestion) => {
+        console.log('im displayquestion');
+       
         let { currentQuestionIndex } = this.state;
-        if(currentQuestionIndex + 1 >questions.length)
-        {   
+        if (currentQuestionIndex + 1 > questions.length) {
             setTimeout(
-                function() {
+                function () {
                     this.props.history.push('/play/end');
-                    this.setState({position: 1});
+                    this.setState({ position: 1 });
                 }
-                .bind(this),300
+                    .bind(this), 300
             );
-           
-        }else{
-        if(this.state.hint===true)
-            this.divRef.current.classList.add('hide');
-        if (!isEmpty(this.state.questions)) {
-            questions = this.state.questions;
-            currentQuestion = questions[currentQuestionIndex];
-            nextQuestion = questions[currentQuestionIndex + 1];
-            previousQuestion = questions[currentQuestionIndex - 1];
-            const answer = currentQuestion.answer;
-            this.setState({
-                currentQuestion,
-                nextQuestion,
-                previousQuestion,
-                numberOfQuestions: questions.length,
-                answer,
-                hint: false
-            });
-        }
+
+        } else {
+            if (this.state.hint === true)
+                this.divRef.current.classList.add('hide');
+            if (!isEmpty(this.state.questions)) {
+                questions = this.state.questions;
+                currentQuestion = questions[currentQuestionIndex];
+                nextQuestion = questions[currentQuestionIndex + 1];
+                previousQuestion = questions[currentQuestionIndex - 1];
+                const answer = currentQuestion.answer;
+                this.setState({
+                    currentQuestion,
+                    nextQuestion,
+                    previousQuestion,
+                    numberOfQuestions: questions.length,
+                    answer,
+                    hint: false
+                });
+            }
         }
 
     };
 
     handleOptionClick = (e) => {
         if (e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
-           this.correctSound.current.play();
+            this.correctSound.current.play();
             this.correctAnswer();
         } else {
             this.wrongSound.current.play();
@@ -123,12 +196,12 @@ class Play extends Component {
         }
     };
 
-    handleHintClick = () =>{
-        if(this.state.hint===false)
-        this.divRef.current.classList.remove('hide');
-        else 
-        this.divRef.current.classList.add('hide');
-        this.setState(prevState=>({
+    handleHintClick = () => {
+        if (this.state.hint === false)
+            this.divRef.current.classList.remove('hide');
+        else
+            this.divRef.current.classList.add('hide');
+        this.setState(prevState => ({
             hint: !prevState.hint
         }));
     }
@@ -145,9 +218,9 @@ class Play extends Component {
             currentQuestionIndex: prevState.currentQuestionIndex + 1,
             numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
         }), () => {
-            if(this.state.nextQuestion===undefined){
+            if (this.state.nextQuestion === undefined) {
                 this.endGame();
-            }else{
+            } else {
                 this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
 
             }
@@ -167,9 +240,9 @@ class Play extends Component {
             currentQuestionIndex: prevState.currentQuestionIndex + 1,
             numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
         }), () => {
-            if(this.state.nextQuestion===undefined){
+            if (this.state.nextQuestion === undefined) {
                 this.endGame();
-            }else{
+            } else {
                 this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
 
             }
@@ -177,38 +250,37 @@ class Play extends Component {
         );
     }
 
-    startTimer = ()=>{
+    startTimer = () => {
         const countDownTime = Date.now() + 150000;
-        this.interval = setInterval(()=>{
+        this.interval = setInterval(() => {
             const now = new Date();
-            const distance = countDownTime-now;
+            const distance = countDownTime - now;
 
-            const minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-            const seconds = Math.floor((distance % (1000*60))/1000);
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if(distance<0)
-            {
+            if (distance < 0) {
                 clearInterval(this.interval);
                 this.setState({
-                    time:{
+                    time: {
                         minutes: 0,
                         seconds: 0
                     }
-                },()=>{
+                }, () => {
                     // alert('Hết giờ!!!!');;
                     // this.props.history.push('/');
                     this.endGame();
                 });
 
-            }else{
+            } else {
                 this.setState({
-                    time:{
+                    time: {
                         minutes,
                         seconds
                     }
                 });
             }
-        },1000);
+        }, 1000);
     }
 
     endGame = () => {
@@ -229,15 +301,15 @@ class Play extends Component {
     }
 
     render() {
-           
+        
         const { classes } = this.props;
-        const { currentQuestion, 
-                currentQuestionIndex, 
-                numberOfQuestions, 
-                correctAnswer,
-                time, 
-                score
-             } = this.state;
+        const { currentQuestion,
+            currentQuestionIndex,
+            numberOfQuestions,
+            correctAnswer,
+            time,
+            score
+        } = this.state;
 
         return (
             <Fragment>
@@ -262,13 +334,13 @@ class Play extends Component {
                     <br></br>
                     <div>
                         <div className="scrollBar">
-                            <img src={require('../../assets/img/test.jpg')} alt="Picture" id="myImage"/>
+                            <img src={require('../../assets/img/test.jpg')} alt="Picture" id="myImage" />
                             <h5>{currentQuestion.question}</h5>
                         </div>
-                       
+
                         <span className="extra hide" ref={this.divRef}>Nguồn: {currentQuestion.source}</span>
                     </div>
-                   
+
                     <div className="options-container">
                         <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionC}</p>
                     </div>
@@ -298,13 +370,13 @@ class Play extends Component {
                         </Button>
                     </div>
                 </div>
-                
+
             </Fragment>
-            
+
         );
 
     }
-    
+
 }
 
 function shuffle(array) {
