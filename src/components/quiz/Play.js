@@ -363,7 +363,7 @@ class Play extends Component {
                     <div>
                         <div className="scrollBar">
                             <img src={currentQuestion.image} alt="Picture" id="myImage" />
-                            <h4 >{currentQuestion.title}</h4>
+                            <h4 style={{textAlign: 'left'}}>{currentQuestion.title}</h4>
                             <h5>{currentQuestion.question}</h5>
                         </div>
 
