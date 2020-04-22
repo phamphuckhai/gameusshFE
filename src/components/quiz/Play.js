@@ -327,7 +327,6 @@ class Play extends Component {
             this.props.history.push('/play/quizSummary', playerStats);
         }, 1000);
     }
-
     render() {
         console.log('im render');
         console.log(this.props);
