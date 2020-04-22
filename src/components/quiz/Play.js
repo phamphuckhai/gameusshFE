@@ -363,7 +363,7 @@ class Play extends Component {
                     <br></br>
                     <div>
                         <div className="scrollBar">
-                            <img src={require('../../assets/img/test.jpg')} alt="Picture" id="myImage" />
+                            <img src={currentQuestion.image} alt="Picture" id="myImage" />
                             <h4 >{currentQuestion.title}</h4>
                             <h5>{currentQuestion.question}</h5>
                         </div>
