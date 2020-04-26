@@ -464,6 +464,7 @@ class Play extends Component {
         {
             await this.chooseIncorrect(mainArray, array, 4);
             await this.chooseCorrect(mainArray, array, 10);
+            await this.shuffle(mainArray);
             this.setState({questions: mainArray});
             
         }
@@ -471,6 +472,7 @@ class Play extends Component {
         {  
             await this.chooseCorrect(mainArray, array, 4);
             await this.chooseIncorrect(mainArray, array, 10);
+            await this.shuffle(mainArray);
             this.setState({questions: mainArray});
         }
         console.log(rad)
