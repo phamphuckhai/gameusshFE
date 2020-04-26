@@ -106,6 +106,7 @@ class Play extends Component {
         this.interval = null;
         this.wrongSound = React.createRef();
         this.correctSound = React.createRef();
+        this.restartScrollbar = React.createRef();
        
     }
     
@@ -171,6 +172,7 @@ class Play extends Component {
     async componentDidMount() {
         await this.initQuestion();
         this.displayFirst();
+        
     }
 
     displayQuestions = (questions = this.state.questions, currentQuestion, nextQuestion, previousQuestion) => {
@@ -216,6 +218,7 @@ class Play extends Component {
             this.wrongSound.current.play();
             this.wrongAnswer();
         }
+        this.restartScrollbar.current.scrollTo(0, 0);
     }
 
     handleQuitButtonClick = () => {
@@ -361,7 +364,7 @@ class Play extends Component {
                     </div>
                     <br></br>
                     <div>
-                        <div className="scrollBar">
+                        <div className="scrollBar" ref = {this.restartScrollbar}>
                             <img src={currentQuestion.image} alt="Picture" id="myImage" />
                             <h5 style={{textAlign: 'left'}}><b>{currentQuestion.title}</b></h5>
                             <h5>{currentQuestion.question}</h5>
