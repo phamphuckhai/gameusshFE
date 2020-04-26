@@ -96,7 +96,7 @@ class Home extends Component {
                         </div>
 
                         <div className="auth-container" >
-                            <Link className="auth-buttons Hiden" id="soEz" ref={this.soEzRef} onClick={this.sEzFunc}>Cực Dễ</Link>
+                            <Link className="auth-buttons Hiden" id="soEz" ref={this.soEzRef} onClick={this.sEzFunc}>Cực dễ</Link>
                             <Link className="auth-buttons Hiden" id="ez" ref={this.ezRef} onClick={this.ezFunc}>Dễ</Link>
                         </div>
                         <div className="Ali" style={{textAlign: 'center' }} >

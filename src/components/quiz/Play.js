@@ -325,7 +325,8 @@ class Play extends Component {
             numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
             correctAnswer: state.correctAnswer,
             wrongAnswer: state.wrongAnswer,
-            fiftyFifty: 2-state.fiftyFifty
+            fiftyFifty: 2-state.fiftyFifty, 
+            level: state.level
         };
         console.log(playerStats);
         setTimeout(() => {
@@ -410,7 +411,7 @@ class Play extends Component {
 
     }
 
-    //Init question function
+    //Init shuffle question function
     async shuffle(array){
         var currentIndex = array.length, temporaryValue, randomIndex;
     
