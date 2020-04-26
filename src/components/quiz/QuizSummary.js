@@ -20,7 +20,7 @@ class QuizSummary extends Component {
         try {
             this.setState({
                 score: (state.score / state.numberOfQuestions) * 100,
-                numberOfQuestions: state.numberOfAnsweredQuestions,
+                numberOfQuestions: state.numberOfQuestions,
                 numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
                 correctAnswer: state.correctAnswer,
                 wrongAnswers: state.wrongAnswers,
@@ -54,7 +54,7 @@ class QuizSummary extends Component {
         if (state !== undefined) {
             stats = (
                 <Fragment>
-                    <div style={{ textAlign: 'center'}}>
+                    <div style={{ textAlign: 'center' }}>
                         <span className="mdi mdi-check-circle-outline success-icon"></span>
                     </div>
                     <h1>Thành tích</h1>
@@ -64,8 +64,11 @@ class QuizSummary extends Component {
                         <span className="stat left">Tổng số câu hỏi</span>
                         <span className="right">{this.state.numberOfQuestions}</span><br />
 
+                        <span className="stat left">Tổng số câu hỏi bạn đã trả lời</span>
+                        <span className="right">{this.state.numberOfAnsweredQuestions}</span><br />
+
                         <span className="stat left">Tổng số câu hỏi đã trả lời đúng</span>
-            <span className="right">{this.state.correctAnswer}</span><br />
+                        <span className="right">{this.state.correctAnswer}</span><br />
                     </div>
                     <section className='quiz-summmary'>
                         <ul>

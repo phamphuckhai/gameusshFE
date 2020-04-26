@@ -128,7 +128,7 @@ class Play extends Component {
 
     async initQuestion(){
         await this.initLevel();
-        const questions = []
+        var questions = [];
         await this.chooseLevel();
         console.log('im constructor');
         // await db.collection(colecItem)
@@ -169,8 +169,10 @@ class Play extends Component {
        
     }
 
+
     async componentDidMount() {
-        await this.initQuestion();
+        await this.initQuestion();   
+        await this.chooseMode(this.state.questions)
         this.displayFirst();
         
     }
@@ -331,8 +333,7 @@ class Play extends Component {
         }, 1000);
     }
     render() {
-        console.log('im render');
-        console.log(this.props);
+    //    console.log(this.state.questions)
         const { classes } = this.props;
         const { currentQuestion,
             currentQuestionIndex,
@@ -409,25 +410,75 @@ class Play extends Component {
 
     }
 
-}
-
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+    //Init question function
+    async shuffle(array){
+        var currentIndex = array.length, temporaryValue, randomIndex;
+    
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+    
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+    
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+    
+       
+    }
+    
+    async chooseIncorrect(mainArray, array, ic)
+    {
+        var i = 0;
+            while(mainArray.length<ic)
+            {
+                if(array[i].answer=='Sai')
+                    mainArray.push(array[i])
+                i+=1;
+            }
+    }
+    
+    async chooseCorrect(mainArray, array, c)
+    {
+        var i = 0;
+        while(mainArray.length<c)
+        {
+            if(array[i].answer=='Đúng')
+                mainArray.push(array[i])
+            i+=1;
+        }
+    }
+    
+    async chooseMode(array){
+        console.log('im in choose mode');
+        console.log(array);
+        this.shuffle(array);
+        var rad = Math.floor(Math.random() * 2) + 0;
+        var mainArray = [];
+        //Mode 1 => 4 sai 6 dung
+        if(rad==1)
+        {
+            await this.chooseIncorrect(mainArray, array, 4);
+            await this.chooseCorrect(mainArray, array, 10);
+            this.setState({questions: mainArray});
+            
+        }
+        else if(rad==0)
+        {  
+            await this.chooseCorrect(mainArray, array, 4);
+            await this.chooseIncorrect(mainArray, array, 10);
+            this.setState({questions: mainArray});
+        }
+        console.log(rad)
+        console.log(mainArray)
+    
     }
 
-    return array;
 }
+
+
 
 export default withStyles(styles)(Play);
