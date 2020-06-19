@@ -286,7 +286,13 @@ class Play extends Component {
     }
 
     wrongAnswer = () => {
-        // navigator.vibrate(1000);
+        try{
+            navigator.vibrate(500);
+        }
+        catch(error){
+            //don't do anything
+        }
+       
         M.toast({
             html: 'Sai rồi! Tiếc quá!',
             classes: 'toast-invalid',
