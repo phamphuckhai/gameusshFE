@@ -286,7 +286,7 @@ class Play extends Component {
     }
 
     wrongAnswer = () => {
-        navigator.vibrate(1000);
+        // navigator.vibrate(1000);
         M.toast({
             html: 'Sai rồi! Tiếc quá!',
             classes: 'toast-invalid',
@@ -377,7 +377,7 @@ class Play extends Component {
                     <audio ref={this.wrongSound} src={incorrectNotification}></audio>
                 </Fragment>
                 <div className="questions" >
-                    <h2>Chọn đáp án đúng</h2>
+                    <h3><b>Chọn đáp án đúng</b></h3>
                     <div className="lifeline-container">
                         <p>
                             <span>Số đáp án đúng: <span className="">{correctAnswer}</span></span>
