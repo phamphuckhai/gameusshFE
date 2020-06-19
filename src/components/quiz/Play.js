@@ -383,7 +383,7 @@ class Play extends Component {
                     <audio ref={this.wrongSound} src={incorrectNotification}></audio>
                 </Fragment>
                 <div className="questions" >
-                    <h3><b>Chọn đáp án đúng</b></h3>
+                    <h4><b>Chọn đáp án đúng</b></h4>
                     <div className="lifeline-container">
                         <p>
                             <span>Số đáp án đúng: <span className="">{correctAnswer}</span></span>
