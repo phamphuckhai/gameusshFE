@@ -162,6 +162,17 @@
         width: 45%;
         transition: 0.3s linear all;
     }
+
+    .icon{
+        color: #fff;
+        cursor: pointer;
+        border-radius: $button-radius;
+        padding: $normal 0;
+        text-align: center;
+        font-size: 30px;
+        transition: 0.3s linear all;
+
+      }
 }
 
 @media (max-width: 768px){

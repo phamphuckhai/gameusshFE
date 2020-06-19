@@ -1,9 +1,11 @@
 import React, { Fragment, Component } from 'react';
 import { Helmet } from 'react-helmet';
-import { IconButton } from '@material-ui/core'
+import { IconButton, Button, Icon } from '@material-ui/core'
 import { Mood } from '@material-ui/icons';
 import { MoodBad } from '@material-ui/icons';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import { green } from '@material-ui/core/colors';
 
 
@@ -13,7 +15,8 @@ class Home extends Component {
         super(props);
         this.state = {
             level: 0,
-            textPlay: 'Chơi'
+            textPlay: 'Chơi',
+            sound: true
         };
         this.soEzRef = React.createRef();
         this.ezRef = React.createRef();
@@ -23,16 +26,16 @@ class Home extends Component {
         this.playRef = React.createRef();
     }
 
-    async pasteState () {
-        const {state} = this;
+    async pasteState() {
+        const { state } = this;
         const homeStats = {
-          level: state.level  
-          
+            level: state.level,
+            sound: state.sound
         };
         setTimeout(() => {
             this.props.history.push('/play/quiz', homeStats);
         }, 1000);
-        
+
     }
 
     handleOnClick = () => {
@@ -42,15 +45,19 @@ class Home extends Component {
         this.dfRef.current.classList.remove('Hiden');
         this.soDfRef.current.classList.remove('Hiden');
         // this.playRef.current.
-        this.setState({textPlay: 'Vui lòng chọn mức độ chơi! '});
+        this.setState({ textPlay: 'Vui lòng chọn mức độ chơi! ' });
 
     }
-
-    async setLevel(a){
-        this.setState({level: a})
+    soundClick = () => {
+        const { sound } = this.state;
+        this.setState({ sound: !sound });
     }
 
-    async changePage(a){
+    async setLevel(a) {
+        this.setState({ level: a })
+    }
+
+    async changePage(a) {
         await this.setLevel(a);
         console.log(this.state.level);
         await this.pasteState();
@@ -75,11 +82,17 @@ class Home extends Component {
         this.changePage(4);
     }
     render() {
+        const { sound } = this.state;
         return (
             <Fragment>
                 <Helmet><title>Nhà</title></Helmet>
+
                 <div id="home">
+
                     <section>
+                        <div> <Link onClick={this.soundClick} className="icon">
+                            {sound ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                        </Link>               </div>
                         <div style={{ textAlign: 'center' }}>
                             <IconButton>
                                 <Mood color="secondary" className="Emoji mod"></Mood>
@@ -99,8 +112,8 @@ class Home extends Component {
                             <Link className="auth-buttons Hiden" id="soEz" ref={this.soEzRef} onClick={this.sEzFunc}>Cực dễ</Link>
                             <Link className="auth-buttons Hiden" id="ez" ref={this.ezRef} onClick={this.ezFunc}>Dễ</Link>
                         </div>
-                        <div className="Ali" style={{textAlign: 'center' }} >
-                        <Link className="auth-buttons Hiden" id="me" ref={this.mRef} onClick={this.mFunc}>Trung bình</Link>
+                        <div className="Ali" style={{ textAlign: 'center' }} >
+                            <Link className="auth-buttons Hiden" id="me" ref={this.mRef} onClick={this.mFunc}>Trung bình</Link>
                         </div>
                         <div className="auth-container" >
                             <Link className="auth-buttons Hiden" id="df" ref={this.dfRef} onClick={this.dfFunc}>Khó</Link>

@@ -6,6 +6,9 @@ import EmojiObjectsIcon from '@material-ui/icons/EmojiObjects';
 import { withStyles } from '@material-ui/core/styles';
 import TimerIcon from '@material-ui/icons/Timer';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
+import { Link } from 'react-router-dom';
 
 // import questions from '../../questions.json';
 import isEmpty from '../../utils/is-empty';
@@ -78,7 +81,7 @@ class Play extends Component {
     // export default Play
 
     constructor(props) {
-       
+
         super(props);
         // shuffle(questions);
         this.state = {
@@ -100,64 +103,67 @@ class Play extends Component {
             time: {},
             hint: false,
             bsound: true,
-            colecItem: ""
+            colecItem: "",
+            sound: true,
         };
         this.divRef = React.createRef();
         this.interval = null;
         this.wrongSound = React.createRef();
         this.correctSound = React.createRef();
         this.restartScrollbar = React.createRef();
-       
-    }
-    
-    async chooseLevel(){
-        let colecItem = '';
-        if(this.state.level == 0){
-            colecItem="questions"
-        }else if(this.state.level == 1){
-            colecItem="questions1"
-        }else if(this.state.level == 2){
-            colecItem="questions2"
-        }else if(this.state.level == 3){
-            colecItem="questions3"
-        }else if(this.state.level == 4){
-            colecItem="questions4"
-        }
-        this.setState({colecItem: colecItem});
+
     }
 
-    async initQuestion(){
+    async chooseLevel() {
+        let colecItem = '';
+        if (this.state.level == 0) {
+            colecItem = "questions"
+        } else if (this.state.level == 1) {
+            colecItem = "questions1"
+        } else if (this.state.level == 2) {
+            colecItem = "questions2"
+        } else if (this.state.level == 3) {
+            colecItem = "questions3"
+        } else if (this.state.level == 4) {
+            colecItem = "questions4"
+        }
+        this.setState({ colecItem: colecItem });
+    }
+
+    async initQuestion() {
         await this.initLevel();
         var questions = [];
         await this.chooseLevel();
         console.log('im constructor');
         // await db.collection(colecItem)
         await db.collection(this.state.colecItem)
-        .get()
-        .then(snapshot => {
-            console.log(snapshot);      
-            snapshot.forEach(doc => {
-    
-                const data = doc.data();
-                questions.push(data);
+            .get()
+            .then(snapshot => {
+                console.log(snapshot);
+                snapshot.forEach(doc => {
+
+                    const data = doc.data();
+                    questions.push(data);
+                })
+                console.log(questions);
+                this.setState({ questions: questions })
             })
-            console.log(questions);
-           this.setState({questions: questions})
-          })
-        .catch(error => console.log(error));
+            .catch(error => console.log(error));
     }
 
-    async initLevel(){
-        const {state} = this.props.location;
+    async initLevel() {
+        const { state } = this.props.location;
         this.setState({
-            level: state.level
+            level: state.level,
+            sound: state.sound
         });
     }
     
+
     displayFirst = () => {
         console.log('im componentdidmount');
         const { questions, currentQuestion, nextQuestion, previousQuestion } = this.state;
-                this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
+        this.displayQuestions(questions, currentQuestion, nextQuestion, previousQuestion);
         this.startTimer();
     }
 
@@ -165,21 +171,21 @@ class Play extends Component {
         clearInterval(this.interval);
     }
 
-    componentWillMount(){
-       
+    componentWillMount() {
+
     }
 
 
     async componentDidMount() {
-        await this.initQuestion();   
+        await this.initQuestion();
         await this.chooseMode(this.state.questions)
         this.displayFirst();
-        
+
     }
 
     displayQuestions = (questions = this.state.questions, currentQuestion, nextQuestion, previousQuestion) => {
         console.log('im displayquestion');
-       
+
         let { currentQuestionIndex } = this.state;
         if (currentQuestionIndex + 1 > questions.length) {
             setTimeout(
@@ -213,16 +219,28 @@ class Play extends Component {
     };
 
     handleOptionClick = (e) => {
+        const { sound } = this.state;
+
         if (e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
-            this.correctSound.current.play();
+            if (sound) {
+                this.correctSound.current.play();
+            }
             this.correctAnswer();
         } else {
-            this.wrongSound.current.play();
+            if (sound) {
+                this.wrongSound.current.play();
+            }
             this.wrongAnswer();
         }
+
         this.restartScrollbar.current.scrollTo(0, 0);
     }
 
+    soundClick = () => {
+        const { sound } = this.state;
+        this.setState({ sound: !sound });
+    }
+    
     handleQuitButtonClick = () => {
         if (window.confirm('Bạn có muốn thoát?')) {
             this.props.history.push('/');
@@ -318,14 +336,14 @@ class Play extends Component {
 
     endGame = () => {
         alert('Kết thúc!');
-        const {state} = this;
+        const { state } = this;
         const playerStats = {
             score: state.score,
             numberOfQuestions: state.numberOfQuestions,
             numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
             correctAnswer: state.correctAnswer,
             wrongAnswer: state.wrongAnswer,
-            fiftyFifty: 2-state.fiftyFifty, 
+            fiftyFifty: 2 - state.fiftyFifty,
             level: state.level
         };
         console.log(playerStats);
@@ -334,14 +352,15 @@ class Play extends Component {
         }, 1000);
     }
     render() {
-    //    console.log(this.state.questions)
+        //    console.log(this.state.questions)
         const { classes } = this.props;
         const { currentQuestion,
             currentQuestionIndex,
             numberOfQuestions,
             correctAnswer,
             time,
-            score
+            score,
+            sound
         } = this.state;
 
         return (
@@ -357,6 +376,9 @@ class Play extends Component {
                         <p>
                             <span>Số đáp án đúng: <span className="">{correctAnswer}</span></span>
                         </p>
+                        <Link onClick={this.soundClick} className="" style={{marginBottom: 10}}>
+                            {sound ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                        </Link> 
                     </div>
                     <div className="space-flex">
 
@@ -366,9 +388,9 @@ class Play extends Component {
                     </div>
                     <br></br>
                     <div>
-                        <div className="scrollBar" ref = {this.restartScrollbar}>
+                        <div className="scrollBar" ref={this.restartScrollbar}>
                             <img src={currentQuestion.image} alt="Picture" id="myImage" />
-                            <h5 style={{textAlign: 'left'}}><b>{currentQuestion.title}</b></h5>
+                            <h5 style={{ textAlign: 'left' }}><b>{currentQuestion.title}</b></h5>
                             <h5>{currentQuestion.question}</h5>
                         </div>
 
@@ -393,6 +415,8 @@ class Play extends Component {
                             Thoát
                         </Button>
 
+
+
                         <Button
                             onClick={this.handleHintClick}
                             variant="contained"
@@ -412,72 +436,66 @@ class Play extends Component {
     }
 
     //Init shuffle question function
-    async shuffle(array){
+    async shuffle(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
-    
+
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
-    
+
             // Pick a remaining element...
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex -= 1;
-    
+
             // And swap it with the current element.
             temporaryValue = array[currentIndex];
             array[currentIndex] = array[randomIndex];
             array[randomIndex] = temporaryValue;
         }
-    
-       
+
+
     }
-    
-    async chooseIncorrect(mainArray, array, ic)
-    {
+
+    async chooseIncorrect(mainArray, array, ic) {
         var i = 0;
-            while(mainArray.length<ic)
-            {
-                if(array[i].answer=='Sai')
-                    mainArray.push(array[i])
-                i+=1;
-            }
-    }
-    
-    async chooseCorrect(mainArray, array, c)
-    {
-        var i = 0;
-        while(mainArray.length<c)
-        {
-            if(array[i].answer=='Đúng')
+        while (mainArray.length < ic) {
+            if (array[i].answer == 'Sai')
                 mainArray.push(array[i])
-            i+=1;
+            i += 1;
         }
     }
-    
-    async chooseMode(array){
+
+    async chooseCorrect(mainArray, array, c) {
+        var i = 0;
+        while (mainArray.length < c) {
+            if (array[i].answer == 'Đúng')
+                mainArray.push(array[i])
+            i += 1;
+        }
+    }
+
+    async chooseMode(array) {
         console.log('im in choose mode');
         console.log(array);
         this.shuffle(array);
         var rad = Math.floor(Math.random() * 2) + 0;
         var mainArray = [];
         //Mode 1 => 4 sai 6 dung
-        if(rad==1)
-        {
+        if (rad == 1) {
             await this.chooseIncorrect(mainArray, array, 4);
             await this.chooseCorrect(mainArray, array, 10);
             await this.shuffle(mainArray);
-            this.setState({questions: mainArray});
-            
+            this.setState({ questions: mainArray });
+
         }
-        else if(rad==0)
-        {  
+        else if (rad == 0) {
             await this.chooseCorrect(mainArray, array, 4);
             await this.chooseIncorrect(mainArray, array, 10);
             await this.shuffle(mainArray);
-            this.setState({questions: mainArray});
+            this.setState({ questions: mainArray });
         }
         console.log(rad)
         console.log(mainArray)
-    
+
     }
 
 }
