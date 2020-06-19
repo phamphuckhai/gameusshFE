@@ -224,13 +224,19 @@ class Play extends Component {
         if (e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
             if (sound) {
                 this.correctSound.current.play();
+                this.correctAnswer();
+            }else{
+                this.correctAnswer();
             }
-            this.correctAnswer();
         } else {
             if (sound) {
                 this.wrongSound.current.play();
+                this.wrongAnswer();
             }
-            this.wrongAnswer();
+            else{
+                this.wrongAnswer();
+            }
+          
         }
 
         this.restartScrollbar.current.scrollTo(0, 0);
