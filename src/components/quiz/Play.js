@@ -403,7 +403,6 @@ class Play extends Component {
                         <div className="scrollBar" ref={this.restartScrollbar}>
                             <img src={currentQuestion.image} alt="Picture" id="myImage" />
                             <h5 style={{ textAlign: 'left' }}><b>{currentQuestion.title}</b></h5>
-                            <p>{currentQuestion.question}</p>
                             <div>{ReactHtmlParser(currentQuestion.question)}</div>
                         </div>
 
