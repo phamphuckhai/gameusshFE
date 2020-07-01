@@ -9,7 +9,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 import { Link } from 'react-router-dom';
-
+import ReactHtmlParser from 'react-html-parser'
 // import questions from '../../questions.json';
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
@@ -403,10 +403,11 @@ class Play extends Component {
                         <div className="scrollBar" ref={this.restartScrollbar}>
                             <img src={currentQuestion.image} alt="Picture" id="myImage" />
                             <h5 style={{ textAlign: 'left' }}><b>{currentQuestion.title}</b></h5>
-                            <h5>{currentQuestion.question}</h5>
+                            <p>{currentQuestion.question}</p>
+                            <div>{ReactHtmlParser(currentQuestion.question)}</div>
                         </div>
 
-                        <span className="extra hide" ref={this.divRef}>Nguồn: {currentQuestion.hint}</span>
+                        <span className="extra hide" ref={this.divRef}>Gợi ý: {currentQuestion.hint}</span>
                     </div>
 
                     <div className="options-container">
