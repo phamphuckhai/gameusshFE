@@ -176,6 +176,14 @@ class Play extends Component {
         });
     }
     
+    modifyUrl (url){
+        let endpoint = url;
+        endpoint = endpoint.replace('oembed', 'iframe');
+        endpoint = endpoint.replace('url', 'src');
+        endpoint = endpoint.replace('watch?v=', 'embed/');
+        endpoint = endpoint.replace('oembed', 'iframe');
+        return endpoint;
+      }
 
     displayFirst = () => {
         console.log('im componentdidmount');
@@ -422,7 +430,7 @@ class Play extends Component {
                         <div className="scrollBar" ref={this.restartScrollbar}>
                             <img src={currentQuestion.image} alt="Picture" id="myImage" />
                             <h5 style={{ textAlign: 'left' }}><b>{currentQuestion.title}</b></h5>
-                            <div>{ReactHtmlParser(currentQuestion.question)}</div>
+                            <div>{ReactHtmlParser(this.modifyUrl(currentQuestion.question))}</div>
                         </div>
 
                         <span className="extra hide" ref={this.divRef}>Gợi ý: {currentQuestion.hint}</span>
