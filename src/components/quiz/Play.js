@@ -105,6 +105,7 @@ class Play extends Component {
             bsound: true,
             colecItem: "",
             sound: true,
+            setting: [],
         };
         this.divRef = React.createRef();
         this.interval = null;
@@ -133,6 +134,7 @@ class Play extends Component {
     async initQuestion() {
         await this.initLevel();
         var questions = [];
+        var setting = [];
         await this.chooseLevel();
         console.log('im constructor');
         // await db.collection(colecItem)
@@ -149,6 +151,21 @@ class Play extends Component {
                 this.setState({ questions: questions })
             })
             .catch(error => console.log(error));
+        // get setting 
+        await db.collection("settings")
+        .get()
+        .then(snapshot => {
+            console.log(snapshot);
+            snapshot.forEach(doc => {
+
+                const data = doc.data();
+                setting.push(data);
+            })
+            console.log(setting);
+            this.setState({ setting: setting })
+        })
+        .catch(error => console.log(error));
+
     }
 
     async initLevel() {
@@ -314,7 +331,7 @@ class Play extends Component {
     }
 
     startTimer = () => {
-        const countDownTime = Date.now() + 150000;
+        const countDownTime = Date.now() + this.state.setting[0].time;
         this.interval = setInterval(() => {
             const now = new Date();
             const distance = countDownTime - now;
@@ -356,7 +373,9 @@ class Play extends Component {
             correctAnswer: state.correctAnswer,
             wrongAnswer: state.wrongAnswer,
             fiftyFifty: 2 - state.fiftyFifty,
-            level: state.level
+            level: state.level,
+            setting: state.setting,
+            time: state.time,
         };
         console.log(playerStats);
         setTimeout(() => {
@@ -490,6 +509,7 @@ class Play extends Component {
         console.log(array);
         this.shuffle(array);
         var rad = Math.floor(Math.random() * 2) + 0;
+        console.log('mode:',rad);
         var mainArray = [];
         //Mode 1 => 4 sai 6 dung
         if (rad == 1) {
@@ -505,7 +525,7 @@ class Play extends Component {
             await this.shuffle(mainArray);
             this.setState({ questions: mainArray });
         }
-        console.log(rad)
+       
         console.log(mainArray)
 
     }

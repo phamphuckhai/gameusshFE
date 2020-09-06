@@ -15,7 +15,9 @@ class QuizSummary extends Component {
             wrongAnswers: 0,
             fiftyFiftyUsed: 0,
             level: 0,
-            mucDo: ''
+            mucDo: '',
+            setting: [],
+            time:{},
         };
     }
 
@@ -23,22 +25,55 @@ class QuizSummary extends Component {
         const { state } = this.props.location;
         try {
             this.setState({
-                score: (state.score / state.numberOfQuestions) * 100,
+                score: (state.score / state.numberOfQuestions) * 0.8 * 100,
                 numberOfQuestions: state.numberOfQuestions,
                 numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
                 correctAnswer: state.correctAnswer,
                 wrongAnswers: state.wrongAnswers,
                 fiftyFiftyUsed: state.fiftyFiftyUsed,
-                level: state.level
+                level: state.level,
+                setting: state.setting,
+                time: state.time,
             });
         }
         catch (err) {
             //do not enything
         }
+        
+      
+
+    }
+
+    async setSetting(){
+        const {time, setting, score}= this.state;
+        var timer = time.minutes * 60 * 1000 + time.seconds*1000;
+        console.log(timer/setting[0].time);
+        if((timer/setting[0].time) > 0.5)
+        {
+            this.setState({
+                score: score + 20,
+            });
+        }
+        else if((timer/setting[0].time) == 0)
+        {
+            this.setState({
+                score: score,
+            });
+        }
+        else{
+            {
+                this.setState({
+                    score: score + 10,
+                });
+            }
+        }
     }
 
     async setNameLevel(){
         console.log(this.state.level)
+        console.log(this.state.score)
+        console.log(this.state.setting)
+        console.log(this.state.time)
         var mucDo;
         if(this.state.level == 0)
         {
@@ -62,6 +97,7 @@ class QuizSummary extends Component {
 
     async componentDidMount() {
        await this.setStateFromLoc();
+       await this.setSetting();
        await this.setNameLevel();
         
     }
@@ -81,20 +117,17 @@ class QuizSummary extends Component {
         const { state, score } = this.props.location;
         let stats, remark;
         const userscore = this.state.score;
-        if (userscore <= 30) {
-            remark = 'Còn kém! Hãy cố gắng hơn nữa!'
+        if (userscore <= 40) {
+            remark = 'Bạn đã đạt danh hiệu "Gà mờ"'
         }
-        else if (userscore > 30 && userscore <= 50) {
-            remark = 'Lần sau hãy cố lên!'
+        else if (userscore > 40 && userscore <= 60) {
+            remark = 'Bạn đã đạt danh hiệu "Tân binh đọc tin"'
         }
-        else if (userscore > 50 && userscore < 70) {
-            remark = 'Bạn có thể làm tốt hơn nữa!'
+        else if (userscore > 60 && userscore < 80) {
+            remark = 'Bạn đã đạt danh hiệu "Người đọc báo chăm chỉ"'
         }
         else if (userscore >= 70 && userscore <= 80) {
-            remark = 'Bạn đã làm rất tốt!'
-        }
-        else {
-            remark = 'Bạn thật tuyệt vời!'
+            remark = 'Bạn đã đạt danh hiệu "Thánh soi tin"'
         }
         if (state !== undefined) {
             stats = (
@@ -107,8 +140,8 @@ class QuizSummary extends Component {
                         <h4>{remark}</h4>
                         <h2>Điểm của bạn: {this.state.score.toFixed(0)}&#37;</h2>
 
-                        <span className="stat left">Mức độ</span>
-                        <span className="right">{this.state.mucDo}</span><br />
+                        {/* <span className="stat left">Mức độ</span>
+                        <span className="right">{this.state.mucDo}</span><br /> */}
 
                         <span className="stat left">Tổng số câu hỏi</span>
                         <span className="right">{this.state.numberOfQuestions}</span><br />

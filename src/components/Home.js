@@ -39,14 +39,14 @@ class Home extends Component {
     }
 
     handleOnClick = () => {
-        this.soEzRef.current.classList.remove('Hiden');
-        this.ezRef.current.classList.remove('Hiden');
-        this.mRef.current.classList.remove('Hiden');
-        this.dfRef.current.classList.remove('Hiden');
-        this.soDfRef.current.classList.remove('Hiden');
-        // this.playRef.current.
-        this.setState({ textPlay: 'Vui lòng chọn mức độ chơi! ' });
-
+        // this.soEzRef.current.classList.remove('Hiden');
+        // this.ezRef.current.classList.remove('Hiden');
+        // this.mRef.current.classList.remove('Hiden');
+        // this.dfRef.current.classList.remove('Hiden');
+        // this.soDfRef.current.classList.remove('Hiden');
+        // // this.playRef.current.
+        // this.setState({ textPlay: 'Vui lòng chọn mức độ chơi! ' });
+        this.changePage(0);
     }
     soundClick = () => {
         const { sound } = this.state;
@@ -103,12 +103,13 @@ class Home extends Component {
                         <div className="play-button-container">
                             <ul>
                                 <li>
-                                    <Link className="play-button" onClick={this.handleOnClick} ref={this.playRef}>{this.state.textPlay}</Link>
+                                    {/* <Link className="play-button" onClick={this.handleOnClick} ref={this.playRef}>{this.state.textPlay}</Link> */}
+                                    <Link className="play-button" onClick={this.handleOnClick}>Vào chơi</Link>
                                 </li>
                             </ul>
                         </div>
 
-                        <div className="auth-container" >
+                        {/* <div className="auth-container" >
                             <Link className="auth-buttons Hiden" id="soEz" ref={this.soEzRef} onClick={this.sEzFunc}>Cực dễ</Link>
                             <Link className="auth-buttons Hiden" id="ez" ref={this.ezRef} onClick={this.ezFunc}>Dễ</Link>
                         </div>
@@ -118,7 +119,7 @@ class Home extends Component {
                         <div className="auth-container" >
                             <Link className="auth-buttons Hiden" id="df" ref={this.dfRef} onClick={this.dfFunc}>Khó</Link>
                             <Link className="auth-buttons Hiden" id="soDf" ref={this.soDfRef} onClick={this.soDfFunc}>Cực khó</Link>
-                        </div>
+                        </div> */}
 
                     </section>
                 </div>
