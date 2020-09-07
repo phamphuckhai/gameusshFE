@@ -177,12 +177,20 @@ class Play extends Component {
     }
     
     modifyUrl (url){
+        try{
+
+      
         let endpoint = url;
-        endpoint = endpoint.replace('oembed', 'iframe');
+        let tmp = 'iframe width="'+ this.state.setting[0].width + '" height="'+this.state.setting[0].height + '" allowFullScreen'
+        endpoint = endpoint.replace('oembed', tmp);
         endpoint = endpoint.replace('url', 'src');
         endpoint = endpoint.replace('watch?v=', 'embed/');
         endpoint = endpoint.replace('oembed', 'iframe');
         return endpoint;
+    }
+    catch(error){
+
+    }
       }
 
     displayFirst = () => {
@@ -402,6 +410,7 @@ class Play extends Component {
             sound
         } = this.state;
 
+      
         return (
             <Fragment>
                 <Helmet><title>Trắc nghiệm</title></Helmet>
@@ -431,6 +440,7 @@ class Play extends Component {
                             <img src={currentQuestion.image} alt="Picture" id="myImage" />
                             <h5 style={{ textAlign: 'left' }}><b>{currentQuestion.title}</b></h5>
                             <div>{ReactHtmlParser(this.modifyUrl(currentQuestion.question))}</div>
+                            
                         </div>
 
                         <span className="extra hide" ref={this.divRef}>Gợi ý: {currentQuestion.hint}</span>
