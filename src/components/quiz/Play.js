@@ -529,17 +529,19 @@ class Play extends Component {
         var rad = Math.floor(Math.random() * 2) + 0;
         console.log('mode:',rad);
         var mainArray = [];
+        var total = this.state.setting[1].Choose;
+        var min = 40 * total;
         //Mode 1 => 4 sai 6 dung
         if (rad == 1) {
-            await this.chooseIncorrect(mainArray, array, 4);
-            await this.chooseCorrect(mainArray, array, 10);
+            await this.chooseIncorrect(mainArray, array, min);
+            await this.chooseCorrect(mainArray, array, total);
             await this.shuffle(mainArray);
             this.setState({ questions: mainArray });
 
         }
         else if (rad == 0) {
-            await this.chooseCorrect(mainArray, array, 4);
-            await this.chooseIncorrect(mainArray, array, 10);
+            await this.chooseCorrect(mainArray, array, min);
+            await this.chooseIncorrect(mainArray, array, total);
             await this.shuffle(mainArray);
             this.setState({ questions: mainArray });
         }
