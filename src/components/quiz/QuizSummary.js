@@ -185,7 +185,7 @@ class QuizSummary extends Component {
         }
         return (
             <Fragment>
-                <Helmet><title>Thành tích</title>></Helmet>
+                <Helmet><title>Thành tích</title></Helmet>
                 <div className="quiz-summary">
                     {stats}
                 </div>

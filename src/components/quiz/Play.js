@@ -507,7 +507,7 @@ class Play extends Component {
     async chooseIncorrect(mainArray, array, ic) {
         var i = 0;
         while (mainArray.length < ic) {
-            if (array[i].answer == 'Sai')
+            if (array[i].answer == 'Không đáng tin')
                 mainArray.push(array[i])
             i += 1;
         }
@@ -516,7 +516,7 @@ class Play extends Component {
     async chooseCorrect(mainArray, array, c) {
         var i = 0;
         while (mainArray.length < c) {
-            if (array[i].answer == 'Đúng')
+            if (array[i].answer == 'Đáng tin')
                 mainArray.push(array[i])
             i += 1;
         }
