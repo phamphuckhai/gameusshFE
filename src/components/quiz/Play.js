@@ -530,7 +530,7 @@ class Play extends Component {
         console.log('mode:',rad);
         var mainArray = [];
         var total = this.state.setting[1].Choose;
-        var min = 40 * total;
+        var min = (40 * total);
         //Mode 1 => 4 sai 6 dung
         if (rad == 1) {
             await this.chooseIncorrect(mainArray, array, min);
