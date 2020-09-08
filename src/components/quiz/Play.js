@@ -15,6 +15,7 @@ import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
 import {Alert} from 'react-bootstrap'
+import Modal from 'react-modal'
 
 //firebase
 import { db } from '../../services/firebase';
@@ -184,10 +185,12 @@ class Play extends Component {
 
             let endpoint = url;
             let tmp = 'iframe width="' + this.state.setting[0].width + '" height="' + this.state.setting[0].height + '" allowFullScreen'
-            endpoint = endpoint.replace('oembed', tmp);
-            endpoint = endpoint.replace('url', 'src');
-            endpoint = endpoint.replace('watch?v=', 'embed/');
-            endpoint = endpoint.replace('oembed', 'iframe');
+            endpoint = endpoint.replace(/<oembed/g, tmp);
+            endpoint = endpoint.replace(/url/g, 'src');
+            endpoint = endpoint.replace(/watch?v=/g, 'embed/');
+            endpoint = endpoint.replace(/oembed>/g, 'iframe>');
+            endpoint = endpoint.replace(/<img/g, '<img id="myImage"');
+            console.log(endpoint);
             return endpoint;
         }
         catch (error) {
@@ -433,6 +436,11 @@ class Play extends Component {
                     <audio ref={this.correctSound} src={correctNotification}></audio>
                     <audio ref={this.wrongSound} src={incorrectNotification}></audio>
                 </Fragment>
+                {/* <div>
+                    <Modal isOpen={true}>
+                        <h2></h2>
+                    </Modal>
+                </div> */}
                 <div className="questions" >
                     <h4><b>Chọn đáp án đúng</b></h4>
                     <div className="lifeline-container">

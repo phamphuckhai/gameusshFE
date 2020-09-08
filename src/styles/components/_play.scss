@@ -33,31 +33,22 @@
         clear: both;
         text-align: center;
         margin: 1em auto;
-
-       
     }
 
 
     .image-style-align-left {
         float: left;
         margin-right: 1.5em;
-        width: 30%;
-        height: 60%;
-        
     }
 
     .image-style-align-center {
         margin-left: auto;
         margin-right: auto;
-        width: 30%;
-        height: 60%;
     }
 
     .image-style-align-right {
         float: right;
         margin-left: 1.5em;
-        width: 30%;
-        height: 60%;
     }
 
     h5 {
@@ -209,8 +200,8 @@
 
 #myImage {
     float: right;
-    width: 30%;
-    height: 60%;
+    width: 100%;
+    height: auto;
     margin: 0 1rem;
 }
 
