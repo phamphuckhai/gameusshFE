@@ -14,6 +14,7 @@ import ReactHtmlParser from 'react-html-parser'
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
+import {Modal} from 'react-bootstrap'
 
 //firebase
 import { db } from '../../services/firebase';
@@ -106,6 +107,7 @@ class Play extends Component {
             colecItem: "",
             sound: true,
             setting: [],
+            modal: false,
         };
         this.divRef = React.createRef();
         this.interval = null;
@@ -153,18 +155,18 @@ class Play extends Component {
             .catch(error => console.log(error));
         // get setting 
         await db.collection("settings")
-        .get()
-        .then(snapshot => {
-            console.log(snapshot);
-            snapshot.forEach(doc => {
+            .get()
+            .then(snapshot => {
+                console.log(snapshot);
+                snapshot.forEach(doc => {
 
-                const data = doc.data();
-                setting.push(data);
+                    const data = doc.data();
+                    setting.push(data);
+                })
+                console.log(setting);
+                this.setState({ setting: setting })
             })
-            console.log(setting);
-            this.setState({ setting: setting })
-        })
-        .catch(error => console.log(error));
+            .catch(error => console.log(error));
 
     }
 
@@ -175,23 +177,23 @@ class Play extends Component {
             sound: state.sound
         });
     }
-    
-    modifyUrl (url){
-        try{
 
-      
-        let endpoint = url;
-        let tmp = 'iframe width="'+ this.state.setting[0].width + '" height="'+this.state.setting[0].height + '" allowFullScreen'
-        endpoint = endpoint.replace('oembed', tmp);
-        endpoint = endpoint.replace('url', 'src');
-        endpoint = endpoint.replace('watch?v=', 'embed/');
-        endpoint = endpoint.replace('oembed', 'iframe');
-        return endpoint;
-    }
-    catch(error){
+    modifyUrl(url) {
+        try {
 
+
+            let endpoint = url;
+            let tmp = 'iframe width="' + this.state.setting[0].width + '" height="' + this.state.setting[0].height + '" allowFullScreen'
+            endpoint = endpoint.replace('oembed', tmp);
+            endpoint = endpoint.replace('url', 'src');
+            endpoint = endpoint.replace('watch?v=', 'embed/');
+            endpoint = endpoint.replace('oembed', 'iframe');
+            return endpoint;
+        }
+        catch (error) {
+
+        }
     }
-      }
 
     displayFirst = () => {
         console.log('im componentdidmount');
@@ -208,6 +210,17 @@ class Play extends Component {
 
     }
 
+    handleShow(){
+        this.setState({
+            modal: true,
+        })
+    }
+
+    handleClose(){
+        this.setState({
+            modal: false,
+        })
+    }
 
     async componentDidMount() {
         await this.initQuestion();
@@ -258,7 +271,7 @@ class Play extends Component {
             if (sound) {
                 this.correctSound.current.play();
                 this.correctAnswer();
-            }else{
+            } else {
                 this.correctAnswer();
             }
         } else {
@@ -266,10 +279,10 @@ class Play extends Component {
                 this.wrongSound.current.play();
                 this.wrongAnswer();
             }
-            else{
+            else {
                 this.wrongAnswer();
             }
-          
+
         }
 
         this.restartScrollbar.current.scrollTo(0, 0);
@@ -279,7 +292,7 @@ class Play extends Component {
         const { sound } = this.state;
         this.setState({ sound: !sound });
     }
-    
+
     handleQuitButtonClick = () => {
         if (window.confirm('Bạn có muốn thoát?')) {
             this.props.history.push('/');
@@ -319,13 +332,13 @@ class Play extends Component {
     }
 
     wrongAnswer = () => {
-        try{
+        try {
             navigator.vibrate(500);
         }
-        catch(error){
+        catch (error) {
             //don't do anything
         }
-       
+
         M.toast({
             html: 'Sai rồi! Tiếc quá!',
             classes: 'toast-invalid',
@@ -407,11 +420,13 @@ class Play extends Component {
             correctAnswer,
             time,
             score,
-            sound
+            sound,
+            modal
         } = this.state;
 
-      
+
         return (
+            
             <Fragment>
                 <Helmet><title>Trắc nghiệm</title></Helmet>
                 <Fragment>
@@ -424,9 +439,9 @@ class Play extends Component {
                         <p>
                             <span>Số đáp án đúng: <span className="">{correctAnswer}</span></span>
                         </p>
-                        <Link onClick={this.soundClick} className="" style={{marginBottom: 10}}>
+                        <Link onClick={this.soundClick} className="" style={{ marginBottom: 10 }}>
                             {sound ? <VolumeUpIcon /> : <VolumeOffIcon />}
-                        </Link> 
+                        </Link>
                     </div>
                     <div className="space-flex">
 
@@ -440,7 +455,7 @@ class Play extends Component {
                             {/* <img src={currentQuestion.image} alt="Picture" id="myImage" /> */}
                             <h5 style={{ textAlign: 'left' }}><b>{currentQuestion.title}</b></h5>
                             <div>{ReactHtmlParser(this.modifyUrl(currentQuestion.question))}</div>
-                            
+
                         </div>
 
                         <span className="extra hide" ref={this.divRef}>Gợi ý: {currentQuestion.hint}</span>
@@ -476,9 +491,11 @@ class Play extends Component {
                             Gợi ý
                         </Button>
                     </div>
+
                 </div>
 
             </Fragment>
+
 
         );
 
@@ -507,30 +524,44 @@ class Play extends Component {
     async chooseIncorrect(mainArray, array, ic) {
         var i = 0;
         while (mainArray.length < ic) {
-            if (array[i].answer == 'Không đáng tin')
-                mainArray.push(array[i])
-            i += 1;
+            try {
+                if (array[i].answer == 'Không đáng tin')
+                    mainArray.push(array[i])
+                i += 1;
+            }
+            catch (error) {
+                //
+            }
         }
     }
 
     async chooseCorrect(mainArray, array, c) {
         var i = 0;
         while (mainArray.length < c) {
-            if (array[i].answer == 'Đáng tin')
-                mainArray.push(array[i])
-            i += 1;
+            try {
+                if (array[i].answer == 'Đáng tin')
+                    mainArray.push(array[i])
+                i += 1;
+            }
+            catch (error) {
+
+            }
+
         }
     }
+
 
     async chooseMode(array) {
         console.log('im in choose mode');
         console.log(array);
         this.shuffle(array);
         var rad = Math.floor(Math.random() * 2) + 0;
-        console.log('mode:',rad);
+        console.log('mode:', rad);
         var mainArray = [];
-        var total = this.state.setting[1].Choose;
-        var min = (40 * total);
+
+
+        var total = await this.state.setting[1].Choose;
+        var min = await parseInt(total * 40 / 100);
         //Mode 1 => 4 sai 6 dung
         if (rad == 1) {
             await this.chooseIncorrect(mainArray, array, min);
@@ -545,7 +576,7 @@ class Play extends Component {
             await this.shuffle(mainArray);
             this.setState({ questions: mainArray });
         }
-       
+
         console.log(mainArray)
 
     }
