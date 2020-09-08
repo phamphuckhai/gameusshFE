@@ -199,7 +199,12 @@
 }
 
 #myImage {
-    float: right;
+    width: 100%;
+    height: auto;
+    margin: 0 1rem;
+}
+
+#myMedia {
     width: 100%;
     height: auto;
     margin: 0 1rem;
