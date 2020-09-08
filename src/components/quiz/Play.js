@@ -14,7 +14,7 @@ import ReactHtmlParser from 'react-html-parser'
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
-import {Alert} from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import Modal from 'react-modal'
 
 //firebase
@@ -23,7 +23,7 @@ import { ThreeSixtySharp, FontDownload, Bluetooth } from '@material-ui/icons';
 
 
 
-
+Modal.setAppElement('#root')
 const styles = theme => ({
     button: {
 
@@ -184,13 +184,14 @@ class Play extends Component {
 
 
             let endpoint = url;
-      let tmp = '<iframe width="' + this.state.setting[0].width + '" height="' + this.state.setting[0].height + '" allowFullScreen id="myImage"'
-      endpoint = endpoint.replace(/<oembed/g, tmp);
-      endpoint = endpoint.replace(/url/g, 'src');
-      endpoint = endpoint.replace(/watch\?v=/g, 'embed/');
-      endpoint = endpoint.replace(/oembed>/g, 'iframe>');
-      endpoint = endpoint.replace(/<img/g, '<img id="myImage"');
-      return endpoint;
+            let tmp = '<iframe width="' + this.state.setting[0].width + '" height="' + this.state.setting[0].height + '" allowFullScreen id="myImage"'
+            endpoint = endpoint.replace(/<oembed/g, tmp);
+            endpoint = endpoint.replace(/url/g, 'src');
+            endpoint = endpoint.replace(/watch\?v=/g, 'embed/');
+            endpoint = endpoint.replace(/oembed>/g, 'iframe>');
+            endpoint = endpoint.replace(/<img/g, '<img id="myImage"');
+            endpoint = endpoint.replace(/<a/g, '<a target="_blank"');
+            return endpoint;
         }
         catch (error) {
 
@@ -212,16 +213,30 @@ class Play extends Component {
 
     }
 
-    handleShow(){
+    handleShow() {
         this.setState({
             modal: true,
         })
     }
 
-    handleClose(){
+    handleClose() {
         this.setState({
             modal: false,
         })
+        
+        this.setState(prevState => ({
+            wrongAnswer: prevState.wrongAnswer + 1,
+            currentQuestionIndex: prevState.currentQuestionIndex + 1,
+            numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
+        }), () => {
+            if (this.state.nextQuestion === undefined) {
+                this.endGame();
+            } else {
+                this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
+
+            }
+        }
+        );
     }
 
     async componentDidMount() {
@@ -340,25 +355,12 @@ class Play extends Component {
         catch (error) {
             //don't do anything
         }
-
         M.toast({
             html: 'Sai rồi! Tiếc quá!',
             classes: 'toast-invalid',
             displayLength: 1500
         });
-        this.setState(prevState => ({
-            wrongAnswer: prevState.wrongAnswer + 1,
-            currentQuestionIndex: prevState.currentQuestionIndex + 1,
-            numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
-        }), () => {
-            if (this.state.nextQuestion === undefined) {
-                this.endGame();
-            } else {
-                this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
-
-            }
-        }
-        );
+        this.handleShow(); 
     }
 
     startTimer = () => {
@@ -423,23 +425,64 @@ class Play extends Component {
             time,
             score,
             sound,
-            modal
+            modal,
+            explain
         } = this.state;
 
 
         return (
-            
+
             <Fragment>
                 <Helmet><title>Trắc nghiệm</title></Helmet>
                 <Fragment>
                     <audio ref={this.correctSound} src={correctNotification}></audio>
                     <audio ref={this.wrongSound} src={incorrectNotification}></audio>
                 </Fragment>
-                {/* <div>
-                    <Modal isOpen={true}>
-                        <h2></h2>
+                <div>
+                    <Modal 
+                    isOpen={modal}
+                    onRequestClose={this.handleClose.bind(this)}
+                    style={{
+                        overlay: {
+                          position: 'fixed',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          bottom: 0,
+                          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        },
+                        content: {
+                          position: 'absolute',
+                          top: '10rem',
+                          left: '20rem',
+                          right: '20rem',
+                          bottom: '10rem',
+                          border: '1px solid #ccc',
+                          background: '#fff',
+                          overflow: 'auto',
+                          WebkitOverflowScrolling: 'touch',
+                          borderRadius: '4px',
+                          outline: 'none',
+                          padding: '20px',
+                          color: 'orange'
+                        }
+                      }}>
+                        <h3>Giải thích lý do sai</h3>
+                        <div>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
+                        <div>
+                        <Button
+                            onClick={this.handleClose.bind(this)}
+                            variant="contained"
+                            color="orange"
+                            className={classes.button}
+                            style={{marginTop: '2rem', color: 'orange', marginLeft: '25rem'}}
+                            // startIcon={<ExitToAppIcon />}
+                        >
+                            Đóng
+                        </Button>
+                        </div>
                     </Modal>
-                </div> */}
+                </div>
                 <div className="questions" >
                     <h4><b>Chọn đáp án đúng</b></h4>
                     <div className="lifeline-container">
