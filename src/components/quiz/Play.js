@@ -14,7 +14,7 @@ import ReactHtmlParser from 'react-html-parser'
 import isEmpty from '../../utils/is-empty';
 import correctNotification from '../../assets/audio/correct.wav';
 import incorrectNotification from '../../assets/audio/incorrect.mp3';
-import {Modal} from 'react-bootstrap'
+import {Alert} from 'react-bootstrap'
 
 //firebase
 import { db } from '../../services/firebase';
