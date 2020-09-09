@@ -442,6 +442,7 @@ class Play extends Component {
                     <Modal 
                     isOpen={modal}
                     onRequestClose={this.handleClose.bind(this)}
+                    className="newModal"
                     style={{
                         overlay: {
                           position: 'fixed',
@@ -453,10 +454,10 @@ class Play extends Component {
                         },
                         content: {
                           position: 'absolute',
-                          top: '10rem',
-                          left: '20rem',
-                          right: '20rem',
-                          bottom: '10rem',
+                          top: '0',
+                          left: '0',
+                          right: '0',
+                          bottom: '0',
                           border: '1px solid #ccc',
                           background: '#fff',
                           overflow: 'auto',
@@ -475,7 +476,7 @@ class Play extends Component {
                             variant="contained"
                             color="orange"
                             className={classes.button}
-                            style={{marginTop: '2rem', color: 'orange', marginLeft: '25rem'}}
+                            style={{marginTop: '2rem', color: 'orange', float: 'left'}}
                             // startIcon={<ExitToAppIcon />}
                         >
                             Đóng
