@@ -364,36 +364,36 @@ class Play extends Component {
     }
 
     startTimer = () => {
-        const countDownTime = Date.now() + this.state.setting[0].time;
-        this.interval = setInterval(() => {
-            const now = new Date();
-            const distance = countDownTime - now;
+        // const countDownTime = Date.now() + this.state.setting[0].time;
+        // this.interval = setInterval(() => {
+        //     const now = new Date();
+        //     const distance = countDownTime - now;
 
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        //     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        //     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (distance < 0) {
-                clearInterval(this.interval);
-                this.setState({
-                    time: {
-                        minutes: 0,
-                        seconds: 0
-                    }
-                }, () => {
-                    // alert('Hết giờ!!!!');;
-                    // this.props.history.push('/');
-                    this.endGame();
-                });
+        //     if (distance < 0) {
+        //         clearInterval(this.interval);
+        //         this.setState({
+        //             time: {
+        //                 minutes: 0,
+        //                 seconds: 0
+        //             }
+        //         }, () => {
+        //             // alert('Hết giờ!!!!');;
+        //             // this.props.history.push('/');
+        //             this.endGame();
+        //         });
 
-            } else {
-                this.setState({
-                    time: {
-                        minutes,
-                        seconds
-                    }
-                });
-            }
-        }, 1000);
+        //     } else {
+        //         this.setState({
+        //             time: {
+        //                 minutes,
+        //                 seconds
+        //             }
+        //         });
+        //     }
+        // }, 1000);
     }
 
     endGame = () => {
@@ -462,21 +462,21 @@ class Play extends Component {
                           background: '#fff',
                           overflow: 'auto',
                           WebkitOverflowScrolling: 'touch',
-                          borderRadius: '4px',
+                          borderRadius: '1rem',
                           outline: 'none',
                           padding: '20px',
                           color: 'orange'
                         }
                       }}>
-                        <h3>Giải thích lý do sai</h3>
-                        <div>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
-                        <div>
+                        <h3 style={{textAlign: 'center', verticalAlign: 'center'}}>Giải thích lý do sai</h3>
+                        <div style={{textAlign: 'center'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
+                        <div style={{textAlign: 'center'}}>
                         <Button
                             onClick={this.handleClose.bind(this)}
                             variant="contained"
                             color="orange"
                             className={classes.button}
-                            style={{marginTop: '2rem', color: 'orange', float: 'left'}}
+                            style={{marginTop: '2rem', color: 'orange'}}
                             // startIcon={<ExitToAppIcon />}
                         >
                             Đóng
@@ -497,7 +497,7 @@ class Play extends Component {
                     <div className="space-flex">
 
                         <span className="">Số câu: {currentQuestionIndex + 1}/{numberOfQuestions}</span>
-                        <span className="timer">{time.minutes}:{time.seconds}<TimerIcon></TimerIcon></span>
+                        {/* <span className="timer">{time.minutes}:{time.seconds}<TimerIcon></TimerIcon></span> */}
 
                     </div>
                     <br></br>

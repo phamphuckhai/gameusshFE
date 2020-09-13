@@ -25,7 +25,8 @@ class QuizSummary extends Component {
         const { state } = this.props.location;
         try {
             this.setState({
-                score: (state.score / state.numberOfQuestions) * 0.8 * 100,
+                // score: (state.score / state.numberOfQuestions) * 0.8 * 100,
+                score: (state.score / state.numberOfQuestions) * 100,
                 numberOfQuestions: state.numberOfQuestions,
                 numberOfAnsweredQuestions: state.numberOfAnsweredQuestions,
                 correctAnswer: state.correctAnswer,
@@ -45,28 +46,28 @@ class QuizSummary extends Component {
     }
 
     async setSetting(){
-        const {time, setting, score}= this.state;
-        var timer = time.minutes * 60 * 1000 + time.seconds*1000;
-        console.log(timer/setting[0].time);
-        if((timer/setting[0].time) > 0.5)
-        {
-            this.setState({
-                score: score + 20,
-            });
-        }
-        else if((timer/setting[0].time) == 0)
-        {
-            this.setState({
-                score: score,
-            });
-        }
-        else{
-            {
-                this.setState({
-                    score: score + 10,
-                });
-            }
-        }
+        // const {time, setting, score}= this.state;
+        // var timer = time.minutes * 60 * 1000 + time.seconds*1000;
+        // console.log(timer/setting[0].time);
+        // if((timer/setting[0].time) > 0.5)
+        // {
+        //     this.setState({
+        //         score: score + 20,
+        //     });
+        // }
+        // else if((timer/setting[0].time) == 0)
+        // {
+        //     this.setState({
+        //         score: score,
+        //     });
+        // }
+        // else{
+        //     {
+        //         this.setState({
+        //             score: score + 10,
+        //         });
+        //     }
+        // }
     }
 
     async setNameLevel(){
@@ -117,16 +118,16 @@ class QuizSummary extends Component {
         const { state, score } = this.props.location;
         let stats, remark;
         const userscore = this.state.score;
-        if (userscore <= 40) {
+        if (userscore < 40) {
             remark = 'Bạn đã đạt danh hiệu "Gà mờ"'
         }
-        else if (userscore > 40 && userscore <= 60) {
+        else if (userscore >= 40 && userscore < 60) {
             remark = 'Bạn đã đạt danh hiệu "Tân binh đọc tin"'
         }
-        else if (userscore > 60 && userscore < 80) {
+        else if (userscore >= 60 && userscore < 80) {
             remark = 'Bạn đã đạt danh hiệu "Người đọc báo chăm chỉ"'
         }
-        else if (userscore >= 70 && userscore <= 80) {
+        else if (userscore >= 80 && userscore <= 100) {
             remark = 'Bạn đã đạt danh hiệu "Thánh soi tin"'
         }
         if (state !== undefined) {
