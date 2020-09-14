@@ -459,16 +459,17 @@ class Play extends Component {
                           right: '0',
                           bottom: '0',
                           border: '1px solid #ccc',
-                          background: '#fff',
+                          background: '#CCFFCC',
                           overflow: 'auto',
                           WebkitOverflowScrolling: 'touch',
                           borderRadius: '1rem',
                           outline: 'none',
                           padding: '20px',
-                          color: 'orange'
+                          color: 'orange',
+                          
                         }
                       }}>
-                        <h3 style={{textAlign: 'center', verticalAlign: 'center'}}>Giải thích lý do sai</h3>
+                        <h3 style={{textAlign: 'center', verticalAlign: 'center', backgroundColor: 'gray', alignItems: 'center'}}>Giải thích lý do sai</h3>
                         <div style={{textAlign: 'center'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
                         <div style={{textAlign: 'center'}}>
                         <Button
