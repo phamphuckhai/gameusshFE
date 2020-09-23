@@ -54,7 +54,7 @@
         padding: $sm !important;
     }
 
-    section ul li a:hover {
+    section ul li a:hover, section ul li a:active {
         color: $off-white;
     }
 
@@ -64,7 +64,7 @@
         transition: 0.3s linear all;
     }
 
-    section ul li:first-child:hover {
+    section ul li:first-child:hover,  section ul li:first-child:active{
         background-color: $blue;
     }
 
@@ -73,7 +73,7 @@
         transition: 0.3s linear all;
     }
 
-    section ul li:last-child:hover {
+    section ul li:last-child:hover, section ul li:last-child:active {
         background-color: $green;
     }
 
@@ -81,7 +81,7 @@
         color: $green;
     }
 
-    section ul li:last-child a:hover {
+    section ul li:last-child a:hover, section ul li:last-child a:active {
         color: $off-white;
     }
 

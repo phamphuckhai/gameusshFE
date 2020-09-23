@@ -74,7 +74,7 @@
         width: 90%;
     }
 
-    .option:hover {
+    .option:hover, .option:active {
         background-color: darken($blue, 20%);
     }
 
@@ -139,7 +139,7 @@
     transition: 0.2s linear all;
 }
 
-.button-container button:first-child:hover {
+.button-container button:first-child:hover, .button-container button:first-child:active {
     background-color: darken($red, 20%);
     box-shadow: $shadow;
     transition: 0.2s linear all;
@@ -151,7 +151,7 @@
     transition: 0.2s linear all;
 }
 
-.button-container button:nth-child(2):hover {
+.button-container button:nth-child(2):hover, .button-container button:nth-child(2):active {
     background-color: darken($green, 10%);
     box-shadow: $shadow;
     transition: 0.2s linear all;
