@@ -156,10 +156,10 @@ class QuizSummary extends Component {
                     <section className='quiz-summmary'>
                         <ul>
                             <li>
-                                <Link to="/">Quay về trang chủ</Link>
+                                <Link ontouchmove to="/">Quay về trang chủ</Link>
                             </li>
                             <li>
-                                <Link onClick={this.handleBackPlayClick}>Chơi lại</Link>
+                                <Link ontouchmove onClick={this.handleBackPlayClick}>Chơi lại</Link>
                             </li>
                         </ul>
                     </section>

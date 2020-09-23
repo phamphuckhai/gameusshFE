@@ -471,7 +471,7 @@ class Play extends Component {
                           
                         }
                       }}>
-                        <h5 style={{textAlign: 'center', verticalAlign: 'center', backgroundColor: 'gray', alignItems: 'center'}}>Giải thích lý do sai</h5>
+                        <h5 style={{textAlign: 'center', backgroundColor: 'gray', alignItems: 'center', display: 'flex', justifyContent:'center'}}>Giải thích lý do sai</h5>
                         <div style={{textAlign: 'center'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
                         <div style={{textAlign: 'center'}}>
                         <Button
@@ -516,10 +516,10 @@ class Play extends Component {
                     </div>
 
                     <div className="options-container">
-                        <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionC}</p>
+                        <p ontouchmove onClick={this.handleOptionClick} className="option">{currentQuestion.optionC}</p>
                     </div>
                     <div className="options-container">
-                        <p onClick={this.handleOptionClick} className="option">{currentQuestion.optionI}</p>
+                        <p ontouchmove onClick={this.handleOptionClick} className="option">{currentQuestion.optionI}</p>
                     </div>
 
                     <div className="button-container space-flex" >
@@ -529,6 +529,7 @@ class Play extends Component {
                             color="yellow"
                             className={classes.button}
                             startIcon={<ExitToAppIcon />}
+                            ontouchmove 
                         >
                             Thoát
                         </Button>
@@ -541,6 +542,7 @@ class Play extends Component {
                             color="yellow"
                             className={classes.button}
                             startIcon={<EmojiObjectsIcon />}
+                            ontouchmove 
                         >
                             Gợi ý
                         </Button>
