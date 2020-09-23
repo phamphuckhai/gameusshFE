@@ -74,8 +74,11 @@
         width: 90%;
     }
 
-    .option:hover {
-        background-color: darken($blue, 20%);
+   
+    @media(hover: hover) and (pointer: fine) {
+        .option:hover {
+            background-color: darken($blue, 20%);
+        }
     }
 
 }
@@ -196,6 +199,7 @@
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
 }
+
 
 
 #myImage {
