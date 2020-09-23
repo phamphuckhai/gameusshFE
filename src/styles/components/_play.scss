@@ -74,7 +74,7 @@
         width: 90%;
     }
 
-    .option:hover, .option:active {
+    .option:hover {
         background-color: darken($blue, 20%);
     }
 
@@ -139,7 +139,7 @@
     transition: 0.2s linear all;
 }
 
-.button-container button:first-child:hover, .button-container button:first-child:active {
+.button-container button:first-child:hover {
     background-color: darken($red, 20%);
     box-shadow: $shadow;
     transition: 0.2s linear all;
@@ -151,7 +151,7 @@
     transition: 0.2s linear all;
 }
 
-.button-container button:nth-child(2):hover, .button-container button:nth-child(2):active {
+.button-container button:nth-child(2):hover {
     background-color: darken($green, 10%);
     box-shadow: $shadow;
     transition: 0.2s linear all;
@@ -210,7 +210,7 @@
     margin: 0 1rem;
 }
 
-@media (max-width: 768px) and (hover: hover) and (pointer: fine) {
+@media (max-width: 768px) {
     #questions {
         padding: 0 $normal;
         width: 100%;
