@@ -462,7 +462,7 @@ class Play extends Component {
                           bottom: '0',
                           border: '1px solid #ccc',
                           background: '#CCFFCC',
-                          overflow: 'auto',
+                          overflowY: 'scroll',
                           WebkitOverflowScrolling: 'touch',
                           borderRadius: '1rem',
                           outline: 'none',
