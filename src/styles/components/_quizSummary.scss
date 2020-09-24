@@ -94,12 +94,12 @@
 @media (max-width: $md-breakpoint) {
     
     .quiz-summary {
-        
+        padding: 0 $normal;
         font-size: $sm;
         padding-left: $xs;
         padding-right: $xs;
-        box-shadow: -3px 3px orange, -2px 2px orange, -1px 1px orange;
-        border: 1px solid orange;
+        box-shadow: -3px 3px lightskyblue, -2px 2px lightskyblue, -1px 1px lightskyblue;
+        border: 1px solid lightskyblue;
     }
 
     div.container.stats {

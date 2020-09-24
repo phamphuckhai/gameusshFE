@@ -462,7 +462,7 @@ class Play extends Component {
                           bottom: '0',
                           border: '1px solid #ccc',
                           background: '#CCFFCC',
-                          overflowY: 'scroll',
+                          overflow: 'auto',
                           WebkitOverflowScrolling: 'touch',
                           borderRadius: '1rem',
                           outline: 'none',
@@ -471,8 +471,8 @@ class Play extends Component {
                           
                         }
                       }}>
-                        <h5 style={{textAlign: 'center', backgroundColor: 'gray', alignItems: 'center', display: 'flex', justifyContent:'center'}}>Giải thích lý do sai</h5>
-                        <div style={{textAlign: 'center'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
+                        <h5 style={{textAlign: 'center',backgroundColor: 'gray', alignItems: 'center', display: 'flex', justifyContent:'center'}}>Giải thích lý do sai</h5>
+                        <div style={{wordBreak: 'break-all',WebkitHyphens:'none',MozHyphens: 'none', hyphens: 'none', alignItems: 'center', display: 'flex'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
                         <div style={{textAlign: 'center'}}>
                         <Button
                             onClick={this.handleClose.bind(this)}
