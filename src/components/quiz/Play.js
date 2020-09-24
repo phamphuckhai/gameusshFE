@@ -340,6 +340,7 @@ class Play extends Component {
             numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
         }), () => {
             if (this.state.nextQuestion === undefined) {
+                this.setState({currentIndex: this.state.questions.length})
                 this.endGame();
             } else {
                 this.displayQuestions(this.state.questions, this.state.currentQuestion, this.state.nextQuestion, this.state.previousQuestion)
@@ -413,7 +414,7 @@ class Play extends Component {
         console.log(playerStats);
         setTimeout(() => {
             this.props.history.push('/play/quizSummary', playerStats);
-        }, 1000);
+        }, 0);
     }
     render() {
         //    console.log(this.state.questions)
@@ -608,8 +609,6 @@ class Play extends Component {
 
 
     async chooseMode(array) {
-        console.log('im in choose mode');
-        console.log(array);
         this.shuffle(array);
         var rad = Math.floor(Math.random() * 2) + 0;
         console.log('mode:', rad);
@@ -633,7 +632,6 @@ class Play extends Component {
             this.setState({ questions: mainArray });
         }
 
-        console.log(mainArray)
 
     }
 
