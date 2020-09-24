@@ -472,7 +472,7 @@ class Play extends Component {
                         }
                       }}>
                         <h5 style={{textAlign: 'center',backgroundColor: 'gray', alignItems: 'center', display: 'flex', justifyContent:'center'}}>Giải thích lý do sai</h5>
-                        <div style={{wordBreak: 'break-all',WebkitHyphens:'none',MozHyphens: 'none', hyphens: 'none', alignItems: 'center', display: 'flex'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
+                        <div style={{wordBreak: 'break-all',WebkitHyphens:'none',MozHyphens: 'none', hyphens: 'none', alignItems: 'center'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
                         <div style={{textAlign: 'center'}}>
                         <Button
                             onClick={this.handleClose.bind(this)}
@@ -519,7 +519,7 @@ class Play extends Component {
                         <p ontouchmove onClick={this.handleOptionClick} className="option">{currentQuestion.optionC}</p>
                     </div>
                     <div className="options-container">
-                        <p ontouchmove onClick={this.handleOptionClick} className="option">{currentQuestion.optionI}</p>
+                        <p style={{whiteSpace: 'nowrap', width: '100%'}} ontouchmove onClick={this.handleOptionClick} className="option">{currentQuestion.optionI}</p>
                     </div>
 
                     <div className="button-container space-flex" >
