@@ -89,7 +89,15 @@
         color: $off-black;
         margin: $xxlg auto;
     }
+
+    .icon-1{
+        width: 3.5rem;
+        height: 3.5rem;
+        border: none;
+    }
 }
+
+
 
 @media (max-width: $md-breakpoint) {
     

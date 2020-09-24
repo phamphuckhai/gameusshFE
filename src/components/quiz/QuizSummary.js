@@ -116,19 +116,25 @@ class QuizSummary extends Component {
 
     render() {
         const { state, score } = this.props.location;
-        let stats, remark;
+        let stats, title;
+        let remark = "Chúc mừng bạn đã đạt danh hiệu";
+        let img = "";
         const userscore = this.state.score;
         if (userscore < 40) {
-            remark = 'Bạn đã đạt danh hiệu "Gà mờ"'
+            title = '"GÀ MỜ"';
+            img = "https://i.imgur.com/CxUV2at.png";
         }
         else if (userscore >= 40 && userscore < 60) {
-            remark = 'Bạn đã đạt danh hiệu "Tân binh đọc tin"'
+            title = '"TÂN BINH ĐỌC TIN"'
+            img = "https://i.imgur.com/aJ7Yl8L.png";
         }
         else if (userscore >= 60 && userscore < 80) {
-            remark = 'Bạn đã đạt danh hiệu "Người đọc báo chăm chỉ"'
+            title = '"NGƯỜI ĐỌC BÁO CHĂM CHỈ"'
+            img = "https://i.imgur.com/EnWDcm3.png"
         }
         else if (userscore >= 80 && userscore <= 100) {
-            remark = 'Bạn đã đạt danh hiệu "Thánh soi tin"'
+            title = '"THÁNH SOI TIN"'
+            img = "https://i.imgur.com/hEAAaQ2.png"
         }
         if (state !== undefined) {
             stats = (
@@ -139,6 +145,8 @@ class QuizSummary extends Component {
                     <h1>Thành tích</h1>
                     <div className="container stats">
                         <h4>{remark}</h4>
+                        <h4 style={{color: 'red'}}>{title}<img className="icon-1" src={img}></img></h4>
+                        
                         <h2>Điểm của bạn: {this.state.score.toFixed(0)}&#37;</h2>
 
                         {/* <span className="stat left">Mức độ</span>
