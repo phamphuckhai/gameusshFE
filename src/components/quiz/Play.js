@@ -466,7 +466,7 @@ class Play extends Component {
                           WebkitOverflowScrolling: 'touch',
                           borderRadius: '1rem',
                           outline: 'none',
-                          padding: 'auto',
+                          padding: '0',
                           color: 'orange',
                           
                         }

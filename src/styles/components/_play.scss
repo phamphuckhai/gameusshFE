@@ -62,22 +62,24 @@
         width: 50%;
     }
 
-    .option {
-        background-color: $blue;
-        border-radius: $button-radius;
-        color: $white;
-        cursor: pointer;
-        margin: $md auto;
-        padding: $normal;
-        transition: 0.3s linear all;
-        text-align: center;
-        width: 90%;
-    }
+    
 
    
     @media(hover: hover) and (pointer: fine) {
         .option:hover {
             background-color: darken($blue, 20%);
+        }
+
+        .option {
+            background-color: $blue;
+            border-radius: $button-radius;
+            color: $white;
+            cursor: pointer;
+            margin: $md auto;
+            padding: $normal;
+            transition: 0.3s linear all;
+            text-align: center;
+            width: 90%;
         }
     }
 
@@ -194,7 +196,7 @@
     display: grid;
     width: 50%;
     height: 50%;
-    overflow: auto;
+    overflow-y: scroll;
     margin: auto;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
