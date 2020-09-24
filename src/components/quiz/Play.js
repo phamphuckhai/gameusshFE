@@ -256,7 +256,7 @@ class Play extends Component {
                     this.props.history.push('/play/end');
                     this.setState({ position: 1 });
                 }
-                    .bind(this), 300
+                    .bind(this), 100
             );
 
         } else {
@@ -332,6 +332,7 @@ class Play extends Component {
             classes: 'toast-valid',
             displayLength: 1500
         });
+
         this.setState(prevState => ({
             score: prevState.score + 1,
             correctAnswer: prevState.correctAnswer + 1,
@@ -397,7 +398,6 @@ class Play extends Component {
     }
 
     endGame = () => {
-        alert('Kết thúc!');
         const { state } = this;
         const playerStats = {
             score: state.score,
@@ -471,7 +471,7 @@ class Play extends Component {
                           
                         }
                       }}>
-                        <h5 style={{textAlign: 'center',backgroundColor: 'gray', alignItems: 'center', display: 'flex', justifyContent:'center'}}>Giải thích lý do sai</h5>
+                        <h5 style={{height: '4rem' ,textAlign: 'center',backgroundColor: 'gray', alignItems: 'center', display: 'flex', justifyContent:'center'}}>Giải thích lý do sai</h5>
                         <div style={{wordBreak: 'break-all',WebkitHyphens:'none',MozHyphens: 'none', hyphens: 'none', alignItems: 'center'}}>{ReactHtmlParser(this.modifyUrl(currentQuestion.explain))}</div>
                         <div style={{textAlign: 'center'}}>
                         <Button
