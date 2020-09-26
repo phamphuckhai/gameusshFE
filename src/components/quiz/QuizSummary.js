@@ -18,6 +18,7 @@ class QuizSummary extends Component {
             mucDo: '',
             setting: [],
             time:{},
+            sound: true,
         };
     }
 
@@ -106,7 +107,8 @@ class QuizSummary extends Component {
     handleBackPlayClick = () => {
         const {state} = this;
         const playerStats = {
-            level: state.level
+            level: state.level,
+            sound: true,
         };
         console.log(playerStats);
         setTimeout(() => {

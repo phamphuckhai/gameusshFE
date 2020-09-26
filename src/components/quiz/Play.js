@@ -410,6 +410,7 @@ class Play extends Component {
             level: state.level,
             setting: state.setting,
             time: state.time,
+            sound: state.sound,
         };
         console.log(playerStats);
         setTimeout(() => {
