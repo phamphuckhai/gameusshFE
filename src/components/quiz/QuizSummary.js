@@ -108,7 +108,7 @@ class QuizSummary extends Component {
         const {state} = this;
         const playerStats = {
             level: state.level,
-            sound: true,
+            sound: state.sound,
         };
         console.log(playerStats);
         setTimeout(() => {
