@@ -8,6 +8,9 @@ app.use(favicon(__dirname + '/build/favicon.ico'));
 // the __dirname is the current directory from where the script is running
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, 'build')));
+app.get('*', function(req, res){
+  res.redirect('https://' + req.headers.host + req.url);
+})
 app.get('/ping', function (req, res) {
  return res.send('pong');
 });
